@@ -53,19 +53,9 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
           <img 
             src="/logo.png" 
             alt="Brandweaver Logo" 
-            className="h-10 w-auto object-contain transform group-hover:scale-110 transition-transform"
-            referrerPolicy="no-referrer"
-            onError={(e) => {
-              // Fallback if logo.png is missing
-              e.currentTarget.style.display = 'none';
-              const fallback = e.currentTarget.nextElementSibling as HTMLElement;
-              if (fallback) fallback.style.display = 'flex';
-            }}
+            className="h-12 w-auto object-contain transform group-hover:scale-110 transition-all duration-500"
           />
-          <div className="hidden w-10 h-10 bg-brand-orange rounded-lg items-center justify-center font-black text-white text-xl transform group-hover:rotate-12 transition-transform">
-            BW
-          </div>
-          <span className={`font-display font-black text-2xl tracking-tighter ${scrolled ? 'text-white' : 'text-brand-blue'}`}>
+          <span className={`font-display font-black text-2xl tracking-tighter ${scrolled ? 'text-white' : 'text-brand-blue'} group-hover:text-brand-orange transition-colors`}>
             BRANDWEAVER
           </span>
         </div>
@@ -142,20 +132,13 @@ const Footer = () => (
   <footer className="bg-brand-black text-white py-20 font-secondary">
     <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
       <div className="col-span-1 md:col-span-2">
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3 mb-6 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img 
             src="/logo.png" 
             alt="Brandweaver Logo" 
-            className="h-8 w-auto object-contain"
-            referrerPolicy="no-referrer"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-              const fallback = e.currentTarget.nextElementSibling as HTMLElement;
-              if (fallback) fallback.style.display = 'flex';
-            }}
+            className="h-10 w-auto object-contain transform group-hover:scale-110 transition-all duration-500"
           />
-          <div className="hidden w-8 h-8 bg-brand-orange rounded items-center justify-center font-black text-white">BW</div>
-          <span className="font-display font-black text-2xl tracking-tighter">BRANDWEAVER</span>
+          <span className="font-display font-black text-2xl tracking-tighter group-hover:text-brand-orange transition-colors">BRANDWEAVER</span>
         </div>
         <p className="text-gray-400 max-w-md mb-8 leading-relaxed">
           The strategic growth partner for scaling brands. We weave together creativity, innovation, and excellence to drive success through digital strategies.
@@ -407,13 +390,17 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
           ].map((belief, i) => (
             <motion.div 
               key={i}
-              whileHover={{ y: -10 }}
-              className="bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              className="bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10 group hover:border-brand-orange transition-all duration-300"
             >
-              <div className="w-12 h-12 bg-brand-orange rounded-lg flex items-center justify-center mb-6 text-white">
+              <div className="w-12 h-12 bg-brand-orange rounded-lg flex items-center justify-center mb-6 text-white group-hover:rotate-12 transition-transform">
                 {belief.icon}
               </div>
-              <h3 className="text-xl mb-4">{belief.title}</h3>
+              <h3 className="text-xl mb-4 group-hover:text-brand-orange transition-colors">{belief.title}</h3>
               <p className="text-blue-100/70 leading-relaxed">{belief.desc}</p>
             </motion.div>
           ))}
@@ -440,16 +427,23 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
             { title: "Content Creation", desc: "High-end photo and video that tells your story.", icon: <Camera /> },
             { title: "Branding & Graphic Design", desc: "Visual identities that command attention.", icon: <Palette /> },
           ].map((service, i) => (
-            <div key={i} className="group p-6 sm:p-8 lg:p-10 rounded-3xl border border-gray-100 hover:border-brand-orange hover:shadow-2xl transition-all">
-              <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center mb-8 text-brand-blue group-hover:bg-brand-orange group-hover:text-white transition-colors">
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="group p-6 sm:p-8 lg:p-10 rounded-3xl border border-gray-100 hover:border-brand-orange hover:shadow-2xl transition-all duration-500 bg-white"
+            >
+              <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center mb-8 text-brand-blue group-hover:bg-brand-orange group-hover:text-white transition-all duration-500 group-hover:rotate-6">
                 {service.icon}
               </div>
-              <h3 className="text-2xl mb-4 text-brand-blue">{service.title}</h3>
+              <h3 className="text-2xl mb-4 text-brand-blue group-hover:text-brand-orange transition-colors">{service.title}</h3>
               <p className="text-gray-500 mb-8">{service.desc}</p>
-              <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-brand-blue group-hover:text-white transition-all">
-                <ChevronRight />
+              <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-brand-blue group-hover:text-white transition-all duration-300">
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" />
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -458,30 +452,48 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
     {/* Social Proof */}
     <section className="py-24 bg-brand-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-brand-blue rounded-[40px] p-12 md:p-20 relative overflow-hidden">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="bg-brand-blue rounded-[40px] p-12 md:p-20 relative overflow-hidden shadow-3xl"
+        >
           <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange/20 rounded-full blur-3xl -mr-32 -mt-32" />
           
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="text-brand-orange font-bold uppercase tracking-widest mb-4">Case Study</div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <div className="text-brand-orange font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                <Target size={18} /> Case Study
+              </div>
               <h2 className="text-4xl md:text-6xl text-white mb-8 leading-tight">UmojaBorn: From 0 to 13K+ Followers</h2>
               <p className="text-blue-100 text-lg mb-10 leading-relaxed">
                 We implemented a complete content strategy and community management plan that transformed UmojaBorn's digital presence in record time.
               </p>
-              <button className="bg-white text-brand-blue px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-brand-orange hover:text-white transition-all">
+              <button className="bg-white text-brand-blue px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-brand-orange hover:text-white transition-all hover:scale-105 active:scale-95 shadow-xl">
                 Read Full Case Study <ArrowRight size={20} />
               </button>
-            </div>
-            <div className="relative">
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8, rotate: -2 }}
+              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-brand-orange/20 blur-2xl rounded-3xl" />
               <img 
                 src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800" 
                 alt="Social Proof" 
-                className="rounded-3xl shadow-2xl"
+                className="rounded-3xl shadow-2xl relative z-10 hover:scale-[1.02] transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   </div>
