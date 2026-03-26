@@ -30,3 +30,11 @@
 .text-balance {
   text-wrap: balance;
 }
+
+.filter-brand-blue {
+  filter: invert(13%) sepia(94%) saturate(2135%) hue-rotate(224deg) brightness(91%) contrast(106%);
+}
+
+.filter-brand-orange {
+  filter: invert(72%) sepia(35%) saturate(5435%) hue-rotate(344deg) brightness(101%) contrast(102%);
+}
