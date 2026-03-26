@@ -1,12 +1,13 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const apiKey = process.env.GEMINI_API_KEY || "";
+const ai = new GoogleGenAI({ apiKey });
 
 export const getGeminiResponse = async (prompt: string) => {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: prompt,
+      model: "gemini-2.0-flash",
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
     });
     return response.text;
   } catch (error) {
