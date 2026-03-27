@@ -45,7 +45,7 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-brand-blue py-3 shadow-lg' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-brand-blue/90 backdrop-blur-md py-3 shadow-lg' : 'bg-brand-blue py-5'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <div 
           className="flex items-center cursor-pointer group"
@@ -54,7 +54,7 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
           <img 
             src="/logo.png" 
             alt="Brandweaver Logo" 
-            className="h-30 w-auto object-contain transform group-hover:scale-110 transition-all duration-500"
+            className="h-20 w-auto object-contain transform group-hover:scale-110 transition-all duration-500"
           />
         </div>
 
@@ -67,7 +67,7 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
               className={`font-medium transition-colors hover:text-brand-orange ${
                 currentPage === link.id 
                   ? 'text-brand-orange' 
-                  : scrolled ? 'text-white' : 'text-brand-blue'
+                  : 'text-white'
               }`}
             >
               {link.name}
@@ -82,8 +82,8 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
         </div>
 
         {/* Mobile Toggle */}
-        <button className="md:hidden text-brand-blue" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X className={scrolled ? 'text-white' : 'text-brand-blue'} /> : <Menu className={scrolled ? 'text-white' : 'text-brand-blue'} />}
+        <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X /> : <Menu />}
         </button>
       </div>
 
@@ -126,11 +126,11 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
   );
 };
 
-const Footer = () => (
+const Footer = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void }) => (
   <footer className="bg-brand-black text-white py-20 font-secondary">
     <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
       <div className="col-span-1 md:col-span-2">
-        <div className="flex items-center mb-6 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        <div className="flex items-center mb-6 group cursor-pointer" onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
           <img 
             src="/logo.png" 
             alt="Brand Weaver Logo" 
@@ -162,23 +162,23 @@ const Footer = () => (
       <div>
         <h4 className="font-bold text-lg mb-6 text-brand-orange">Growth Solutions</h4>
         <ul className="flex flex-col gap-4 text-gray-400">
-          <li><a href="#" className="hover:text-white transition-colors">Social Media Marketing</a></li>
-          <li><a href="#" className="hover:text-white transition-colors">Website & App Dev</a></li>
-          <li><a href="#" className="hover:text-white transition-colors">AI & Automation</a></li>
-          <li><a href="#" className="hover:text-white transition-colors">Branding & Design</a></li>
-          <li><a href="#" className="hover:text-white transition-colors">PPC & Media Buying</a></li>
+          <li><button onClick={() => setCurrentPage('services')} className="hover:text-white transition-colors text-left">Social Media Marketing</button></li>
+          <li><button onClick={() => setCurrentPage('services')} className="hover:text-white transition-colors text-left">Website & App Dev</button></li>
+          <li><button onClick={() => setCurrentPage('services')} className="hover:text-white transition-colors text-left">AI & Automation</button></li>
+          <li><button onClick={() => setCurrentPage('services')} className="hover:text-white transition-colors text-left">Branding & Design</button></li>
+          <li><button onClick={() => setCurrentPage('services')} className="hover:text-white transition-colors text-left">PPC & Media Buying</button></li>
         </ul>
       </div>
 
       <div>
         <h4 className="font-bold text-lg mb-6 text-brand-orange">Quick Links</h4>
         <ul className="flex flex-col gap-4 text-gray-400">
-          <li><button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-white transition-colors text-left">Home</button></li>
-          <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-          <li><a href="#" className="hover:text-white transition-colors">Our Work</a></li>
-          <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-          <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-          <li><a href="#" className="hover:text-white transition-colors font-bold text-brand-orange">Request Custom Package</a></li>
+          <li><button onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-white transition-colors text-left">Home</button></li>
+          <li><button onClick={() => setCurrentPage('about')} className="hover:text-white transition-colors text-left">About Us</button></li>
+          <li><button onClick={() => setCurrentPage('portfolio')} className="hover:text-white transition-colors text-left">Our Work</button></li>
+          <li><button onClick={() => setCurrentPage('pricing')} className="hover:text-white transition-colors text-left">Pricing</button></li>
+          <li><button onClick={() => setCurrentPage('blog')} className="hover:text-white transition-colors text-left">Blog</button></li>
+          <li><button onClick={() => setCurrentPage('contact')} className="hover:text-white transition-colors text-left font-bold text-brand-orange">Request Custom Package</button></li>
         </ul>
       </div>
     </div>
@@ -469,16 +469,19 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
             <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter">Our Work</h2>
             <p className="text-blue-100 text-xl font-medium italic italic">Real Results. Real Growth.</p>
           </div>
-          <button className="bg-brand-orange text-white px-8 py-4 rounded-xl font-black text-lg hover:scale-105 transition-all shadow-xl">
-            View All Projects
+          <button 
+            onClick={() => onCtaClick()}
+            className="bg-brand-orange text-white px-8 py-4 rounded-xl font-black text-lg hover:scale-105 transition-all shadow-xl"
+          >
+            View Our Work
           </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { title: "Skincare Scale", result: "220% Revenue Increase", desc: "Scaled a skincare brand's online revenue in 6 months." },
-            { title: "Social Domination", result: "400% Instagram Reach", desc: "Increased Brandweaver's Instagram reach and engagement." },
-            { title: "Conversion Engine", result: "60% Boost in Leads", desc: "Designed a web platform that boosted conversions significantly." }
+            { title: "Luxemane Hair", result: "220% Traffic Increase", desc: "Scaled a hair brand's online visibility and traffic through strategic content." },
+            { title: "Umojaborn", result: "14K+ New Followers", desc: "Increased Instagram reach by 400% with trendy Afrocentric content strategy." },
+            { title: "Web Platform", result: "60% Conversion Boost", desc: "Designed and launched a web platform that boosted conversions significantly." }
           ].map((item, i) => (
             <div key={i} className="bg-white/5 border border-white/10 p-10 rounded-[40px] hover:border-brand-orange transition-all group">
               <div className="text-brand-orange font-black text-4xl mb-4 group-hover:scale-110 transition-transform origin-left tracking-tighter">{item.result.split(' ')[0]}</div>
@@ -505,7 +508,10 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
                   🎯 Need a custom package? Tell us a little bit about your brand, and we’ll design your personalized growth plan.
                 </p>
               </div>
-              <button className="w-full bg-brand-blue text-white py-5 rounded-2xl font-black text-xl hover:bg-brand-orange transition-all shadow-xl">
+              <button 
+                onClick={onCtaClick}
+                className="w-full bg-brand-blue text-white py-5 rounded-2xl font-black text-xl hover:bg-brand-orange transition-all shadow-xl"
+              >
                 Request Custom Growth Plan →
               </button>
             </div>
@@ -544,7 +550,7 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
   </div>
 );
 
-const ServicesPage = () => (
+const ServicesPage = ({ onCtaClick }: { onCtaClick: () => void }) => (
   <div className="pt-32 pb-24">
     <div className="max-w-7xl mx-auto px-6">
       <div className="text-center mb-20">
@@ -572,15 +578,6 @@ const ServicesPage = () => (
             packages: ["Launch Pad – Get your dream site live fast.", "Scale Engine – Full eCommerce and conversion setup.", "Orbit Suite – Custom platforms and app systems for brands ready to scale globally."]
           },
           { 
-            title: "AI Solutions & Automation", 
-            tagline: "Smarter Systems. Effortless Growth.",
-            isComingSoon: true,
-            icon: <Zap size={40} />, 
-            desc: "AI is your silent growth partner. We integrate smart tools that automate repetitive work, boost productivity, and predict what your customers want next.",
-            gain: ["AI content automation and chatbots", "Predictive analytics for marketing decisions", "Streamlined workflows that save time and cost"],
-            packages: ["IntelliStart – Begin your AI-powered transformation.", "Smart Flow Pro – Automate your marketing process.", "Neural Growth Suite – AI systems that run your business 24/7."]
-          },
-          { 
             title: "Branding & Design", 
             tagline: "Create a Brand That’s Impossible to Ignore.",
             icon: <Palette size={40} />, 
@@ -595,6 +592,15 @@ const ServicesPage = () => (
             desc: "We turn your ad spend into a profit engine. Using smart targeting, creative storytelling, and constant optimization, we build campaigns that deliver real ROI.",
             gain: ["Profitable ad campaigns across Google, Meta, TikTok, and more", "Intelligent tracking and conversion reporting", "Campaigns built to scale, not just spend"],
             packages: ["Launch Flow – Test and discover what works.", "Growth Accelerator – Scale your winning campaigns.", "Performance Empire – Multi-channel dominance with high ROI."]
+          },
+          { 
+            title: "AI Solutions & Automation", 
+            tagline: "Smarter Systems. Effortless Growth.",
+            isComingSoon: true,
+            icon: <Zap size={40} />, 
+            desc: "AI is your silent growth partner. We integrate smart tools that automate repetitive work, boost productivity, and predict what your customers want next.",
+            gain: ["AI content automation and chatbots", "Predictive analytics for marketing decisions", "Streamlined workflows that save time and cost"],
+            packages: ["IntelliStart – Begin your AI-powered transformation.", "Smart Flow Pro – Automate your marketing process.", "Neural Growth Suite – AI systems that run your business 24/7."]
           }
         ].map((service, i) => (
           <motion.div 
@@ -649,7 +655,10 @@ const ServicesPage = () => (
                   </div>
                 </div>
               )}
-              <button className={`w-full mt-12 py-5 rounded-2xl font-black text-lg sm:text-xl transition-all shadow-xl hover:scale-105 active:scale-95 ${i % 2 === 0 ? 'bg-brand-blue text-white hover:bg-brand-savoy' : 'bg-brand-orange text-white hover:bg-orange-600'}`}>
+              <button 
+                onClick={onCtaClick}
+                className={`w-full mt-12 py-5 rounded-2xl font-black text-lg sm:text-xl transition-all shadow-xl hover:scale-105 active:scale-95 ${i % 2 === 0 ? 'bg-brand-blue text-white hover:bg-brand-savoy' : 'bg-brand-orange text-white hover:bg-orange-600'}`}
+              >
                 {service.isComingSoon ? 'Get Early Access' : 'Book a Consultation'}
               </button>
             </div>
@@ -893,7 +902,7 @@ const ContactPage = () => {
   );
 };
 
-const PortfolioPage = () => (
+const PortfolioPage = ({ onCtaClick }: { onCtaClick: () => void }) => (
   <div className="pt-32 pb-24">
     <div className="max-w-7xl mx-auto px-6 text-center mb-20">
       <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter">Featured Projects</h1>
@@ -916,6 +925,14 @@ const PortfolioPage = () => (
           </div>
         ))}
       </div>
+      <div className="text-center mt-12">
+        <button 
+          onClick={onCtaClick}
+          className="bg-brand-orange text-white px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl"
+        >
+          Let’s Build Your Next Success Story
+        </button>
+      </div>
     </div>
 
     <div className="max-w-7xl mx-auto px-6 space-y-24 mb-32">
@@ -935,17 +952,22 @@ const PortfolioPage = () => (
               <h4 className="font-black text-brand-orange uppercase tracking-widest text-sm mb-2">Our Solution:</h4>
               <p className="text-lg text-gray-600">We rebuilt their visual identity, ideated and curated high quality brand content, executed social media campaigns to boost visibility and website traffic.</p>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
-              <div className="text-3xl font-black text-brand-blue">220%</div>
-              <div className="text-sm font-bold text-gray-500">Website Traffic</div>
+            <div>
+              <h4 className="font-black text-brand-orange uppercase tracking-widest text-sm mb-2">Results:</h4>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-600">
+                <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-brand-orange" /> 50+ high quality brand content</li>
+                <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-brand-orange" /> 220% increase in traffic</li>
+                <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-brand-orange" /> 50x TikTok growth</li>
+                <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-brand-orange" /> 10x Instagram growth</li>
+              </ul>
             </div>
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
-              <div className="text-3xl font-black text-brand-blue">50x</div>
-              <div className="text-sm font-bold text-gray-500">TikTok Engagement</div>
-            </div>
           </div>
+          <button 
+            onClick={onCtaClick}
+            className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
+          >
+            View Project Details
+          </button>
         </div>
         <div className="lg:w-1/2 rounded-[40px] overflow-hidden shadow-2xl">
           <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=800" alt="Luxemane Hair" className="w-full h-auto" />
@@ -966,21 +988,34 @@ const PortfolioPage = () => (
               <h4 className="font-black text-brand-orange uppercase tracking-widest text-sm mb-2">Our Solution:</h4>
               <p className="text-lg text-gray-600">We implemented a launch and content strategy that focuses on target audience attraction and retention through trendy Afrocentric content.</p>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
-              <div className="text-3xl font-black text-brand-blue">14K+</div>
-              <div className="text-sm font-bold text-gray-500">New Followers</div>
-            </div>
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
-              <div className="text-3xl font-black text-brand-blue">2 Months</div>
-              <div className="text-sm font-bold text-gray-500">Brand Recognition</div>
+            <div>
+              <h4 className="font-black text-brand-orange uppercase tracking-widest text-sm mb-2">Results:</h4>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-600">
+                <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-brand-orange" /> Gained 14k+ new followers</li>
+                <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-brand-orange" /> Consistent monthly growth</li>
+                <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-brand-orange" /> Brand recognition in 2 months</li>
+              </ul>
             </div>
           </div>
+          <button 
+            onClick={onCtaClick}
+            className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
+          >
+            View Project Details
+          </button>
         </div>
         <div className="lg:w-1/2 rounded-[40px] overflow-hidden shadow-2xl">
-          <img src="https://images.unsplash.com/photo-1523450001312-daa4e2e1bac0?auto=format&fit=crop&q=80&w=800" alt="Umojaborn" className="w-full h-auto" />
+          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800" alt="Umojaborn" className="w-full h-auto" />
         </div>
+      </div>
+
+      <div className="text-center">
+        <button 
+          onClick={onCtaClick}
+          className="bg-brand-orange text-white px-12 py-6 rounded-2xl font-black text-2xl hover:scale-105 transition-all shadow-2xl"
+        >
+          Start My Growth Journey
+        </button>
       </div>
     </div>
 
@@ -1154,8 +1189,8 @@ export default function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'home': return <HomePage onCtaClick={() => setCurrentPage('contact')} />;
-      case 'services': return <ServicesPage />;
-      case 'portfolio': return <PortfolioPage />;
+      case 'services': return <ServicesPage onCtaClick={() => setCurrentPage('contact')} />;
+      case 'portfolio': return <PortfolioPage onCtaClick={() => setCurrentPage('contact')} />;
       case 'pricing': return <PricingPage />;
       case 'about': return <AboutPage />;
       case 'blog': return <BlogPage />;
@@ -1181,7 +1216,7 @@ export default function App() {
         </AnimatePresence>
       </main>
       <GrowthStrategistChat />
-      <Footer />
+      <Footer setCurrentPage={setCurrentPage} />
     </div>
   );
 }

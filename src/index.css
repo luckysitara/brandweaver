@@ -35,6 +35,13 @@
   filter: invert(13%) sepia(94%) saturate(2135%) hue-rotate(224deg) brightness(91%) contrast(106%);
 }
 
+/* Original brand orange filter */
 .filter-brand-orange {
   filter: invert(72%) sepia(35%) saturate(5435%) hue-rotate(344deg) brightness(101%) contrast(102%);
+}
+
+/* Specific RGB orange filter for logo: rgb(255,165,0) */
+/* Achieved by making the image white and then rotating hue to orange (~39deg for #FFA500) */
+.logo-rgb-orange {
+  filter: brightness(0) invert(1) hue-rotate(39deg);
 }
