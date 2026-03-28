@@ -39,16 +39,24 @@ export default async function handler(req, res) {
     // Use gemini-1.5-flash as default
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
+    console.log("Calling Gemini API with prompt:", prompt); 
+    
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const text = response.text();
     
+    // Check if the response from Gemini API is OK
+    // The SDK might not directly expose .ok, but response.status or similar could be checked if available.
+    // For now, we rely on response.text() and catch block.
+    
+    const text = await response.text(); // Get the text content
+    console.log("Gemini API response text received:", text.substring(0, 200)); // Log first 200 chars for debugging
+
     res.status(200).json({ text });
   } catch (error) {
-    console.error("Gemini API Detail Error:", error);
+    console.error("Gemini API Execution Error:", error); 
     res.status(500).json({ 
       error: "Gemini API Execution Error", 
-      message: error.message,
+      message: error.message || "An unknown error occurred.",
       stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
