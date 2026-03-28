@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import emailjs from '@emailjs/browser';
 import { getGeminiResponse } from './services/geminiService';
 import { 
   ArrowRight, 
@@ -878,29 +877,39 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
     }
   }, [initialService]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.current) return;
     setLoading(true);
 
-    emailjs.sendForm(
-      import.meta.env.VITE_EMAILJS_SERVICE_ID,
-      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-      form.current,
-      {
-        publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-      }
-    )
-    .then((result) => {
-        console.log(result.text);
+    const formData = new FormData(form.current);
+    const params = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      service_interest: formData.get('service_interest'),
+      budget: formData.get('budget'),
+      message: formData.get('message'),
+      current_date: formData.get('current_date')
+    };
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ template_params: params }),
+      });
+
+      if (response.ok) {
         setSubmitted(true);
-    }, (error) => {
-        console.log(error.text);
-        alert("Something went wrong. Please try again or email us directly at Brandweaverltd@gmail.com");
-    })
-    .finally(() => {
-        setLoading(false);
-    });
+      } else {
+        throw new Error('Failed to send');
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please try again or email us directly at Brandweaverltd@gmail.com");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
