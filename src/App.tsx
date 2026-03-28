@@ -797,15 +797,35 @@ const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: 
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
           {[
-            { name: "Mirian George", role: "Digital Marketing Strategist" },
-            { name: "Rienne", role: "Cyber Security Specialist" },
-            { name: "Ogugua Chidinma", role: "Social Media Team Lead" },
-            { name: "Gabriel", role: "Branding Specialist" }
+            { 
+              name: "Mirian George", 
+              role: "Digital Marketing Strategist",
+              image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400"
+            },
+            { 
+              name: "Rienne", 
+              role: "Cyber Security Specialist",
+              image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400"
+            },
+            { 
+              name: "Ogugua Chidinma", 
+              role: "Social Media Team Lead",
+              image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&q=80&w=400"
+            },
+            { 
+              name: "Gabriel", 
+              role: "Branding Specialist",
+              image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400"
+            }
           ].map((member, i) => (
             <div key={i} className="group">
               <div className="aspect-square rounded-[40px] bg-gray-100 mb-6 overflow-hidden relative shadow-lg">
+                <img 
+                  src={member.image} 
+                  alt={member.name} 
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                />
                 <div className="absolute inset-0 bg-brand-blue opacity-0 group-hover:opacity-20 transition-opacity" />
-                <div className="w-full h-full flex items-center justify-center text-gray-300 font-black text-6xl">BW</div>
               </div>
               <h3 className="text-2xl font-black text-brand-blue mb-2 tracking-tight">{member.name}</h3>
               <p className="text-gray-500 font-medium">{member.role}</p>
