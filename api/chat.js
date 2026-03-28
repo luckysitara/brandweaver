@@ -36,7 +36,6 @@ export default async function handler(req, res) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    // Use gemini-1.5-flash as default
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
     console.log("Calling Gemini API with prompt:", prompt); 
@@ -44,14 +43,21 @@ export default async function handler(req, res) {
     const result = await model.generateContent(prompt);
     const response = await result.response;
     
-    // Check if the response from Gemini API is OK
-    // The SDK might not directly expose .ok, but response.status or similar could be checked if available.
-    // For now, we rely on response.text() and catch block.
-    
-    const text = await response.text(); // Get the text content
-    console.log("Gemini API response text received:", text.substring(0, 200)); // Log first 200 chars for debugging
+    // Log the raw response text received from Gemini API
+    const responseText = await response.text(); 
+    console.log("Gemini API raw response:", responseText.substring(0, 500)); 
 
-    res.status(200).json({ text });
+    // Check if the response text is empty or potentially malformed
+    if (!responseText || responseText.trim() === '') {
+        console.error("Gemini API returned empty response.");
+        return res.status(500).json({ 
+          error: "Empty response from Gemini API", 
+          message: "The Gemini API returned an empty response. Please check the prompt or API." 
+        });
+    }
+
+    // Attempt to send the response back to the client as JSON
+    res.status(200).json({ text: responseText });
   } catch (error) {
     console.error("Gemini API Execution Error:", error); 
     res.status(500).json({ 
