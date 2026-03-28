@@ -15,6 +15,15 @@ export default async function handler(req, res) {
     return;
   }
 
+  // Health check for debugging
+  if (req.method === 'GET') {
+    return res.status(200).json({ 
+      status: "alive", 
+      env_key_detected: !!process.env.GEMINI_API_KEY,
+      node_version: process.version
+    });
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -22,13 +31,21 @@ export default async function handler(req, res) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     console.error("GEMINI_API_KEY is missing in environment variables");
-    return res.status(500).json({ error: "Server configuration error: API key missing" });
+    return res.status(500).json({ 
+      error: "Server configuration error", 
+      message: "GEMINI_API_KEY is not defined in the server environment. Please add it to Vercel environment variables." 
+    });
   }
 
   try {
     const { prompt } = req.body;
+    
+    if (!prompt) {
+      return res.status(400).json({ error: "Missing prompt in request body" });
+    }
+
     const genAI = new GoogleGenAI(apiKey);
-    // Use 1.5-flash as it's the most stable and widely available
+    // Use gemini-1.5-flash as default
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
     const result = await model.generateContent(prompt);
@@ -39,8 +56,9 @@ export default async function handler(req, res) {
   } catch (error) {
     console.error("Gemini API Detail Error:", error);
     res.status(500).json({ 
-      error: "Failed to get AI response", 
-      message: error.message 
+      error: "Gemini API Execution Error", 
+      message: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
 }
