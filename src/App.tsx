@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getGeminiResponse } from './services/geminiService';
 import { 
   ArrowRight, 
   CheckCircle2, 
@@ -212,120 +211,6 @@ const Footer = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void }) => (
 );
 
 // Pages
-const GrowthStrategistChat = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<{ role: 'user' | 'ai', text: string }[]>([
-    { role: 'ai', text: "Hello! I'm your Brandweaver Growth Strategist. How can I help you scale your brand today?" }
-  ]);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages]);
-
-  const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
-
-    const userMsg = input.trim();
-    setInput('');
-    setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
-    setIsLoading(true);
-
-    const systemPrompt = `You are the Brandweaver AI Growth Strategist. Your goal is to help businesses scale through strategic digital marketing, branding, and content creation. 
-    Be professional, insightful, and growth-oriented. 
-    Brandweaver's core beliefs: 
-    1. Marketing drives revenue. 
-    2. Strategy > Vibes. 
-    3. Consistency builds growth. 
-    4. Founders shouldn't DIY their marketing.
-    
-    User question: ${userMsg}`;
-
-    const aiResponse = await getGeminiResponse(systemPrompt);
-    setMessages(prev => [...prev, { role: 'ai', text: aiResponse || "I'm sorry, I'm having trouble connecting right now." }]);
-    setIsLoading(false);
-  };
-
-  return (
-    <div className="fixed bottom-6 right-6 z-[100]">
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="bg-white w-[350px] sm:w-[400px] h-[500px] rounded-3xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden mb-4"
-          >
-            <div className="bg-brand-blue p-6 text-white flex justify-between items-center">
-              <div>
-                <h3 className="font-bold text-lg">Growth Strategist</h3>
-                <p className="text-xs text-blue-200">AI-Powered Scaling Partner</p>
-              </div>
-              <button onClick={() => setIsOpen(false)} className="hover:bg-white/10 p-2 rounded-full transition-colors">
-                <X size={20} />
-              </button>
-            </div>
-
-            <div ref={scrollRef} className="flex-grow overflow-y-auto p-6 space-y-4 bg-gray-50">
-              {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] p-4 rounded-2xl text-sm ${
-                    msg.role === 'user' 
-                      ? 'bg-brand-orange text-white rounded-tr-none' 
-                      : 'bg-white text-brand-blue shadow-sm border border-gray-100 rounded-tl-none'
-                  }`}>
-                    {msg.text}
-                  </div>
-                </div>
-              ))}
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-gray-100">
-                    <div className="flex gap-1">
-                      <div className="w-1.5 h-1.5 bg-brand-orange rounded-full animate-bounce" />
-                      <div className="w-1.5 h-1.5 bg-brand-orange rounded-full animate-bounce [animation-delay:0.2s]" />
-                      <div className="w-1.5 h-1.5 bg-brand-orange rounded-full animate-bounce [animation-delay:0.4s]" />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="p-4 bg-white border-t border-gray-100 flex gap-2">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Ask about scaling your brand..."
-                className="flex-grow px-4 py-3 bg-gray-50 rounded-xl text-sm focus:ring-2 focus:ring-brand-orange outline-none"
-              />
-              <button 
-                onClick={handleSend}
-                disabled={isLoading}
-                className="bg-brand-blue text-white p-3 rounded-xl hover:bg-brand-orange transition-colors disabled:opacity-50"
-              >
-                <ArrowRight size={20} />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-16 h-16 bg-brand-orange text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform"
-      >
-        {isOpen ? <X size={28} /> : <MessageSquare size={28} />}
-      </button>
-    </div>
-  );
-};
-
 // Pages
 const HomePage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
   <div className="overflow-hidden">
@@ -628,7 +513,7 @@ const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (
             isComingSoon: true,
             icon: <Zap size={40} />, 
             desc: "AI is your silent growth partner. We integrate smart tools that automate repetitive work, boost productivity, and predict what your customers want next.",
-            gain: ["AI content automation and chatbots", "Predictive analytics for marketing decisions", "Streamlined workflows that save time and cost"],
+            gain: ["AI content automation and lead generation", "Predictive analytics for marketing decisions", "Streamlined workflows that save time and cost"],
             packages: ["IntelliStart – Begin your AI-powered transformation.", "Smart Flow Pro – Automate your marketing process.", "Neural Growth Suite – AI systems that run your business 24/7."]
           }
         ].map((service, i) => (
@@ -1482,7 +1367,6 @@ export default function App() {
           </motion.div>
         </AnimatePresence>
       </main>
-      <GrowthStrategistChat />
       <Footer setCurrentPage={setCurrentPage} />
     </div>
   );
