@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import { getGeminiResponse } from './services/geminiService';
 import { 
   ArrowRight, 
@@ -18,8 +19,28 @@ import {
   Palette,
   Code,
   Megaphone,
-  Camera
+  Camera,
+  Phone,
+  Twitter,
+  Globe,
+  Music
 } from 'lucide-react';
+
+// Use a custom TikTok icon component if it doesn't exist in lucide-react
+const TikTok = ({ size = 20 }: { size?: number }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round"
+  >
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
 
 // Types
 type Page = 'home' | 'services' | 'portfolio' | 'pricing' | 'about' | 'blog' | 'contact';
@@ -144,17 +165,20 @@ const Footer = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void }) => (
           📍 Working with brands worldwide — empowering beauty, fashion, and e-commerce businesses to evolve, grow, and win.
         </p>
         <div className="flex gap-4">
-          <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
+          <a href="https://www.instagram.com/brandweaver.ltd?igsh=enJqNzNkN21odzZo" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
             <Instagram size={20} />
           </a>
-          <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
+          <a href="https://www.linkedin.com/company/brand-weaver-ltd/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
             <Linkedin size={20} />
           </a>
-          <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
+          <a href="https://www.facebook.com/share/18EuQwRZFL/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
             <Facebook size={20} />
           </a>
-          <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors text-xs font-black">
-            TK
+          <a href="https://x.com/brandweaverltd?s=21" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
+            <Twitter size={20} />
+          </a>
+          <a href="https://www.tiktok.com/@brandweaver?_r=1&_t=ZS-952yfkUEAGP" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
+            <TikTok size={20} />
           </a>
         </div>
       </div>
@@ -304,7 +328,7 @@ const GrowthStrategistChat = () => {
 };
 
 // Pages
-const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
+const HomePage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
   <div className="overflow-hidden">
     {/* Hero Section */}
     <section className="relative min-h-screen flex items-center pt-20">
@@ -312,7 +336,7 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
         <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-blue/5 rounded-bl-[200px]" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-orange/10 rounded-full blur-3xl" />
       </div>
-      
+
       <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -330,18 +354,20 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
             At Brand Weaver LTD, we transform ambitious fashion, beauty, and e-commerce businesses into scalable global brands by weaving together bold creativity, intelligent AI, seamless web experiences, and powerful marketing strategies to deliver measurable results.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button 
-              onClick={onCtaClick}
-              className="bg-brand-blue text-white px-6 sm:px-8 py-4 rounded-xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 hover:bg-brand-savoy transition-all shadow-xl hover:-translate-y-1"
+            <button
+              onClick={() => navigateToContact('Full Scale Growth Partnership')}
+              className="bg-brand-blue text-white px-6 sm:px-8 py-4 rounded-xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 hover:bg-brand-orange transition-all shadow-xl hover:-translate-y-1"
             >
               👉 Plug In Your Business. <ArrowRight size={20} />
             </button>
-            <button className="px-6 sm:px-8 py-4 rounded-xl font-bold text-base sm:text-lg border-2 border-brand-blue text-brand-blue hover:bg-brand-blue/5 transition-all">
+            <button 
+              onClick={() => setCurrentPage('portfolio')}
+              className="px-6 sm:px-8 py-4 rounded-xl font-bold text-base sm:text-lg border-2 border-brand-blue text-brand-blue hover:bg-brand-blue/5 transition-all"
+            >
               View Our Work
             </button>
           </div>
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -445,7 +471,8 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
             <motion.div 
               key={i}
               whileHover={{ y: -10 }}
-              className="p-10 rounded-[40px] bg-gray-50 border border-gray-100 hover:shadow-2xl transition-all group"
+              className="p-10 rounded-[40px] bg-gray-50 border border-gray-100 hover:shadow-2xl transition-all group cursor-pointer"
+              onClick={() => setCurrentPage('portfolio')}
             >
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 text-brand-orange shadow-sm group-hover:bg-brand-orange group-hover:text-white transition-all">
                 {item.icon}
@@ -470,7 +497,7 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
             <p className="text-blue-100 text-xl font-medium italic italic">Real Results. Real Growth.</p>
           </div>
           <button 
-            onClick={() => onCtaClick()}
+            onClick={() => setCurrentPage('portfolio')}
             className="bg-brand-orange text-white px-8 py-4 rounded-xl font-black text-lg hover:scale-105 transition-all shadow-xl"
           >
             View Our Work
@@ -509,7 +536,7 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
                 </p>
               </div>
               <button 
-                onClick={onCtaClick}
+                onClick={() => navigateToContact('Full Scale Growth Partnership')}
                 className="w-full bg-brand-blue text-white py-5 rounded-2xl font-black text-xl hover:bg-brand-orange transition-all shadow-xl"
               >
                 Request Custom Growth Plan →
@@ -542,7 +569,10 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
         <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-16 leading-relaxed">
           Stay ahead with insights, updates, and the latest trends in digital marketing, AI, and branding. We share actionable strategies that help you build the brand of tomorrow — today.
         </p>
-        <button className="bg-brand-blue text-white px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl">
+        <button 
+          onClick={() => setCurrentPage('blog')}
+          className="bg-brand-blue text-white px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl"
+        >
           Visit Our Blog
         </button>
       </div>
@@ -550,7 +580,7 @@ const HomePage = ({ onCtaClick }: { onCtaClick: () => void }) => (
   </div>
 );
 
-const ServicesPage = ({ onCtaClick }: { onCtaClick: () => void }) => (
+const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
   <div className="pt-32 pb-24">
     <div className="max-w-7xl mx-auto px-6">
       <div className="text-center mb-20">
@@ -656,8 +686,8 @@ const ServicesPage = ({ onCtaClick }: { onCtaClick: () => void }) => (
                 </div>
               )}
               <button 
-                onClick={onCtaClick}
-                className={`w-full mt-12 py-5 rounded-2xl font-black text-lg sm:text-xl transition-all shadow-xl hover:scale-105 active:scale-95 ${i % 2 === 0 ? 'bg-brand-blue text-white hover:bg-brand-savoy' : 'bg-brand-orange text-white hover:bg-orange-600'}`}
+                onClick={() => navigateToContact(service.title)}
+                className={`w-full py-5 rounded-2xl font-black text-lg sm:text-xl transition-all shadow-xl hover:scale-105 active:scale-95 ${i % 2 === 0 ? 'bg-brand-blue text-white hover:bg-brand-orange' : 'bg-brand-orange text-white hover:bg-brand-blue'}`}
               >
                 {service.isComingSoon ? 'Get Early Access' : 'Book a Consultation'}
               </button>
@@ -669,7 +699,7 @@ const ServicesPage = ({ onCtaClick }: { onCtaClick: () => void }) => (
   </div>
 );
 
-const AboutPage = () => (
+const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
   <div className="pt-32 pb-24">
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-32">
@@ -684,7 +714,10 @@ const AboutPage = () => (
           <p className="text-lg text-gray-500 leading-relaxed mb-10">
             We bring together specialists in digital strategy, design, social media, branding, AI, web development, and paid media — each expert contributing their unique skill set to build your brand’s growth engine.
           </p>
-          <button className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-brand-orange transition-all shadow-xl">
+          <button 
+            onClick={() => navigateToContact('Full Scale Growth Partnership')}
+            className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-brand-orange transition-all shadow-xl"
+          >
             Ignite My Brand Engine <ArrowRight size={20} />
           </button>
         </motion.div>
@@ -784,12 +817,70 @@ const AboutPage = () => (
   </div>
 );
 
-const ContactPage = () => {
+const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [selectedService, setSelectedService] = useState(initialService || "Social Media Marketing");
+  const form = useRef<HTMLFormElement>(null);
+
+  // Dynamic Content Mapping
+  const getContextualContent = () => {
+    if (selectedService === "AI Solutions & Automation") {
+      return {
+        title: "Join the AI Growth Waitlist",
+        subtitle: "Be among the first to deploy our next-gen AI automation systems.",
+        buttonText: "Secure My Early Access →",
+        successMsg: "You're on the list! We'll reach out as soon as our AI suites are ready for deployment."
+      };
+    }
+    if (selectedService === "Full Scale Growth Partnership") {
+      return {
+        title: "Let’s Build Your Growth Engine",
+        subtitle: "Tell us about your brand goals, and let's design a hands-free scaling system.",
+        buttonText: "Start My Partnership Journey →",
+        successMsg: "Strategy received! Our lead growth partner will review your brand and contact you within 24 hours."
+      };
+    }
+    return {
+      title: "Let’s Talk About Your Project",
+      subtitle: "Get a Custom Quote — Let’s understand your goals and design your growth system.",
+      buttonText: "Request My Custom Quote →",
+      successMsg: "Message Received! Our growth strategists will be in touch within 24 hours."
+    };
+  };
+
+  const content = getContextualContent();
+
+  // Update selection if prop changes
+  useEffect(() => {
+    if (initialService) {
+      setSelectedService(initialService);
+    }
+  }, [initialService]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (!form.current) return;
+    setLoading(true);
+
+    emailjs.sendForm(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      form.current,
+      {
+        publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      }
+    )
+    .then((result) => {
+        console.log(result.text);
+        setSubmitted(true);
+    }, (error) => {
+        console.log(error.text);
+        alert("Something went wrong. Please try again or email us directly at Brandweaverltd@gmail.com");
+    })
+    .finally(() => {
+        setLoading(false);
+    });
   };
 
   return (
@@ -797,9 +888,11 @@ const ContactPage = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
           <div>
-            <h1 className="text-5xl md:text-7xl text-brand-blue mb-8 font-black tracking-tighter text-balance">Let’s Talk About Your Project</h1>
+            <h1 className="text-5xl md:text-7xl text-brand-blue mb-8 font-black tracking-tighter text-balance">
+              {content.title}
+            </h1>
             <p className="text-xl text-gray-600 mb-12 italic font-medium">
-              Get a Custom Quote — Let’s understand your goals and design your growth system.
+              {content.subtitle}
             </p>
             
             <div className="space-y-8">
@@ -809,16 +902,31 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <h4 className="font-black text-xl mb-1 text-brand-blue">Email Us</h4>
-                  <p className="text-gray-500 text-lg">hello@brandweaver.com</p>
+                  <a href="mailto:Brandweaverltd@gmail.com" className="text-gray-500 text-lg hover:text-brand-orange transition-colors">Brandweaverltd@gmail.com</a>
                 </div>
               </div>
               <div className="flex items-start gap-6">
                 <div className="w-14 h-14 bg-brand-orange/10 text-brand-orange rounded-2xl flex items-center justify-center shrink-0">
-                  <Target size={28} />
+                  <Phone size={28} />
                 </div>
                 <div>
-                  <h4 className="font-black text-xl mb-1 text-brand-blue">Our Reach</h4>
-                  <p className="text-gray-500 text-lg">Working with brands worldwide from Lagos, Nigeria.</p>
+                  <h4 className="font-black text-xl mb-1 text-brand-blue">Call / WhatsApp</h4>
+                  <a href="tel:+2349010449515" className="text-gray-500 text-lg hover:text-brand-orange transition-colors">+234 901 044 9515</a>
+                </div>
+              </div>
+              <div className="flex items-start gap-6">
+                <div className="w-14 h-14 bg-brand-orange/10 text-brand-orange rounded-2xl flex items-center justify-center shrink-0">
+                  <Globe size={28} />
+                </div>
+                <div>
+                  <h4 className="font-black text-xl mb-1 text-brand-blue">Social Media</h4>
+                  <div className="flex gap-4 mt-2">
+                    <a href="https://www.instagram.com/brandweaver.ltd?igsh=enJqNzNkN21odzZo" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-orange transition-colors"><Instagram size={20} /></a>
+                    <a href="https://www.linkedin.com/company/brand-weaver-ltd/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-orange transition-colors"><Linkedin size={20} /></a>
+                    <a href="https://www.facebook.com/share/18EuQwRZFL/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-orange transition-colors"><Facebook size={20} /></a>
+                    <a href="https://x.com/brandweaverltd?s=21" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-orange transition-colors"><Twitter size={20} /></a>
+                    <a href="https://www.tiktok.com/@brandweaver?_r=1&_t=ZS-952yfkUEAGP" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-orange transition-colors"><TikTok size={20} /></a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -851,24 +959,29 @@ const ContactPage = () => {
                 <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
                   <CheckCircle2 size={48} />
                 </div>
-                <h2 className="text-3xl font-black mb-4 text-brand-blue tracking-tight">Message Received!</h2>
-                <p className="text-gray-600 text-lg leading-relaxed">Our growth strategists will be in touch within 24 hours to build your custom growth plan.</p>
+                <h2 className="text-3xl font-black mb-4 text-brand-blue tracking-tight">Success!</h2>
+                <p className="text-gray-600 text-lg leading-relaxed">{content.successMsg}</p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form ref={form} onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="font-black text-xs uppercase tracking-widest text-gray-400">Full Name</label>
-                    <input required type="text" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all" placeholder="John Doe" />
+                    <input required name="name" type="text" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all" placeholder="John Doe" />
                   </div>
                   <div className="space-y-2">
                     <label className="font-black text-xs uppercase tracking-widest text-gray-400">Email Address</label>
-                    <input required type="email" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all" placeholder="john@company.com" />
+                    <input required name="email" type="email" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all" placeholder="john@company.com" />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="font-black text-xs uppercase tracking-widest text-gray-400">Service(s) You’re Interested In</label>
-                  <select className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all">
+                  <label className="font-black text-xs uppercase tracking-widest text-gray-400">Inquiry Type</label>
+                  <select 
+                    name="service_interest" 
+                    value={selectedService}
+                    onChange={(e) => setSelectedService(e.target.value)}
+                    className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all"
+                  >
                     <option>Social Media Marketing</option>
                     <option>Website & App Development</option>
                     <option>AI Solutions & Automation</option>
@@ -879,7 +992,7 @@ const ContactPage = () => {
                 </div>
                 <div className="space-y-2">
                   <label className="font-black text-xs uppercase tracking-widest text-gray-400">Estimated Budget</label>
-                  <select className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all">
+                  <select name="budget" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all">
                     <option>&lt; 300k</option>
                     <option>350k–700k</option>
                     <option>700k–950k</option>
@@ -887,11 +1000,17 @@ const ContactPage = () => {
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <label className="font-black text-xs uppercase tracking-widest text-gray-400">Tell Us About Your Project</label>
-                  <textarea rows={4} className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all" placeholder="What are your goals?"></textarea>
+                  <label className="font-black text-xs uppercase tracking-widest text-gray-400">Tell Us More</label>
+                  <textarea required name="message" rows={4} className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all" placeholder="Tell us about your goals..."></textarea>
                 </div>
-                <button type="submit" className="w-full bg-brand-blue text-white py-5 rounded-2xl font-black text-xl hover:bg-brand-orange transition-all shadow-2xl hover:scale-105 active:scale-95">
-                  Build My Custom Growth Plan →
+                {/* Hidden field for the template's date */}
+                <input type="hidden" name="current_date" value={new Date().toLocaleString()} />
+                <button 
+                    disabled={loading}
+                    type="submit" 
+                    className="w-full bg-brand-blue text-white py-5 rounded-2xl font-black text-xl hover:bg-brand-orange transition-all shadow-2xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:scale-100"
+                >
+                  {loading ? 'Processing...' : content.buttonText}
                 </button>
               </form>
             )}
@@ -902,7 +1021,7 @@ const ContactPage = () => {
   );
 };
 
-const PortfolioPage = ({ onCtaClick }: { onCtaClick: () => void }) => (
+const PortfolioPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
   <div className="pt-32 pb-24">
     <div className="max-w-7xl mx-auto px-6 text-center mb-20">
       <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter">Featured Projects</h1>
@@ -927,7 +1046,7 @@ const PortfolioPage = ({ onCtaClick }: { onCtaClick: () => void }) => (
       </div>
       <div className="text-center mt-12">
         <button 
-          onClick={onCtaClick}
+          onClick={() => navigateToContact('Full Scale Growth Partnership')}
           className="bg-brand-orange text-white px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl"
         >
           Let’s Build Your Next Success Story
@@ -963,7 +1082,7 @@ const PortfolioPage = ({ onCtaClick }: { onCtaClick: () => void }) => (
             </div>
           </div>
           <button 
-            onClick={onCtaClick}
+            onClick={() => navigateToContact('Branding & Design')}
             className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
           >
             View Project Details
@@ -998,7 +1117,7 @@ const PortfolioPage = ({ onCtaClick }: { onCtaClick: () => void }) => (
             </div>
           </div>
           <button 
-            onClick={onCtaClick}
+            onClick={() => navigateToContact('Social Media Marketing')}
             className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
           >
             View Project Details
@@ -1011,7 +1130,7 @@ const PortfolioPage = ({ onCtaClick }: { onCtaClick: () => void }) => (
 
       <div className="text-center">
         <button 
-          onClick={onCtaClick}
+          onClick={() => navigateToContact('Full Scale Growth Partnership')}
           className="bg-brand-orange text-white px-12 py-6 rounded-2xl font-black text-2xl hover:scale-105 transition-all shadow-2xl"
         >
           Start My Growth Journey
@@ -1039,7 +1158,7 @@ const PortfolioPage = ({ onCtaClick }: { onCtaClick: () => void }) => (
   </div>
 );
 
-const PricingPage = () => (
+const PricingPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
   <div className="pt-32 pb-24">
     <div className="max-w-7xl mx-auto px-6 text-center mb-20">
       <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter text-balance">Invest in the Systems That Actually Grow Your Business</h1>
@@ -1140,7 +1259,10 @@ const PricingPage = () => (
       <div className="bg-brand-white rounded-[40px] p-12 md:p-20 text-center border-2 border-dashed border-gray-200">
         <h2 className="text-4xl md:text-5xl font-black text-brand-blue mb-8">Ready to Build Your Growth Plan?</h2>
         <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto italic font-medium">Most clients start with a 3–6 month growth phase, then continue with a flexible, month-to-month system that keeps scaling results.</p>
-        <button className="bg-brand-blue text-white px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl">
+        <button 
+          onClick={() => navigateToContact('Full Scale Growth Partnership')}
+          className="bg-brand-blue text-white px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl"
+        >
           Get Your Custom Growth Quote →
         </button>
       </div>
@@ -1148,39 +1270,155 @@ const PricingPage = () => (
   </div>
 );
 
-const BlogPage = () => (
-  <div className="pt-32 pb-24">
-    <div className="max-w-7xl mx-auto px-6">
-      <div className="text-center mb-20">
-        <h1 className="text-5xl md:text-7xl text-brand-blue mb-6">Growth Insights</h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">Expert advice on scaling your brand, marketing strategy, and digital innovation.</p>
-      </div>
+// Blog Data
+const BLOG_POSTS = [
+  { 
+    id: 1,
+    title: "Why Founders Shouldn't DIY Their Marketing", 
+    date: "Oct 12, 2023", 
+    category: "Strategy",
+    excerpt: "The hidden costs of 'doing it all' and why expert delegation is the real secret to scaling your brand.",
+    content: `
+      <p>Many founders start with the "DIY" mentality. It’s what gets the business off the ground. But as you scale, that same mentality becomes your biggest bottleneck.</p>
+      <h3>The Opportunity Cost</h3>
+      <p>Every hour you spend trying to figure out Meta Ads or editing a TikTok video is an hour you aren't spending on product innovation, partnership deals, or high-level vision. The math simply doesn't add up for long-term growth.</p>
+      <h3>The Expertise Gap</h3>
+      <p>Digital marketing in 2024 isn't just about posting; it's about data architecture, creative psychology, and platform-specific algorithms. A founder can't be an expert in all of these while also running a company.</p>
+      <p>To win, you need to weave together a team of specialists who live and breathe growth, so you can focus on leading.</p>
+    `
+  },
+  { 
+    id: 2,
+    title: "The Power of Consistency in Brand Growth", 
+    date: "Oct 05, 2023", 
+    category: "Growth",
+    excerpt: "How a unified brand voice across all platforms creates the trust needed for high-value conversions.",
+    content: `
+      <p>Consistency is the most underrated marketing strategy. In a world of noise, the brand that remains steady is the one that gets remembered.</p>
+      <h3>Trust is Built Through Repetition</h3>
+      <p>A customer needs to see your brand 7 to 12 times before they feel comfortable making a purchase. If your message changes every time, you reset that clock.</p>
+      <h3>Visual Cohesion</h3>
+      <p>Whether it's your website, your Instagram feed, or your email newsletter, the "vibe" must be identical. This creates a professional image that justifies premium pricing.</p>
+    `
+  },
+  { 
+    id: 3,
+    title: "Strategy Over Vibes: Converting Visitors into Clients", 
+    date: "Sep 28, 2023", 
+    category: "Conversion",
+    excerpt: "Stop chasing likes and start chasing ROI. Learn how to optimize your funnel for actual sales.",
+    content: `<p>Vibes don't pay bills. While aesthetic is important, strategy is what converts a visitor into a paying client.</p><h3>The Conversion Funnel</h3><p>You need to guide your audience from awareness to consideration, and finally to the sale. This requires clear CTAs (Call to Actions) and a frictionless user experience.</p>`
+  },
+  { 
+    id: 4,
+    title: "Social Media Trends to Watch in 2024", 
+    date: "Sep 21, 2023", 
+    category: "Social",
+    excerpt: "Short-form video is evolving. Here is how your brand can stay ahead of the algorithm.",
+    content: `<p>The algorithm is changing. 2024 is the year of "Social SEO" and community-first content.</p>`
+  },
+  { 
+    id: 5,
+    title: "Building a Visual Identity that Commands Attention", 
+    date: "Sep 14, 2023", 
+    category: "Branding",
+    excerpt: "Your brand is more than a logo. It is a story told through every pixel and color choice.",
+    content: `<p>Design is the silent ambassador of your brand. If your visuals aren't commanding attention, you're losing money.</p>`
+  },
+  { 
+    id: 6,
+    title: "How to Measure Marketing ROI Effectively", 
+    date: "Sep 07, 2023", 
+    category: "Analytics",
+    excerpt: "If you can't measure it, you can't grow it. A guide to the metrics that actually matter for your bottom line.",
+    content: `<p>Stop looking at vanity metrics like 'likes'. Start looking at CAC (Customer Acquisition Cost) and LTV (Lifetime Value).</p>`
+  },
+];
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[
-          { title: "Why Founders Shouldn't DIY Their Marketing", date: "Oct 12, 2023", category: "Strategy" },
-          { title: "The Power of Consistency in Brand Growth", date: "Oct 05, 2023", category: "Growth" },
-          { title: "Strategy Over Vibes: Converting Visitors into Clients", date: "Sep 28, 2023", category: "Conversion" },
-          { title: "Social Media Trends to Watch in 2024", date: "Sep 21, 2023", category: "Social" },
-          { title: "Building a Visual Identity that Commands Attention", date: "Sep 14, 2023", category: "Branding" },
-          { title: "How to Measure Marketing ROI Effectively", date: "Sep 07, 2023", category: "Analytics" },
-        ].map((post, i) => (
-          <div key={i} className="bg-white p-8 rounded-[32px] border border-gray-100 hover:shadow-xl transition-all group">
-            <div className="text-brand-orange font-bold text-xs uppercase tracking-widest mb-4">{post.category}</div>
-            <h3 className="text-2xl text-brand-blue mb-6 group-hover:text-brand-orange transition-colors">{post.title}</h3>
-            <div className="flex justify-between items-center text-gray-400 text-sm">
-              <span>{post.date}</span>
-              <button className="font-bold text-brand-blue flex items-center gap-1">Read More <ChevronRight size={16} /></button>
-            </div>
+const BlogPage = () => {
+  const [selectedPost, setSelectedPost] = useState<typeof BLOG_POSTS[0] | null>(null);
+
+  if (selectedPost) {
+    return (
+      <div className="pt-32 pb-24">
+        <div className="max-w-4xl mx-auto px-6">
+          <button 
+            onClick={() => setSelectedPost(null)}
+            className="flex items-center gap-2 text-brand-orange font-bold mb-8 hover:gap-4 transition-all"
+          >
+            ← Back to All Insights
+          </button>
+          
+          <div className="mb-12">
+            <div className="text-brand-orange font-black text-sm uppercase tracking-widest mb-4">{selectedPost.category}</div>
+            <h1 className="text-4xl md:text-6xl text-brand-blue font-black mb-6 leading-tight">{selectedPost.title}</h1>
+            <div className="text-gray-400 font-medium">{selectedPost.date} • 5 min read</div>
           </div>
-        ))}
+
+          <div 
+            className="prose prose-lg max-w-none text-gray-600 leading-relaxed space-y-6"
+            dangerouslySetInnerHTML={{ __html: selectedPost.content }}
+          />
+
+          <div className="mt-16 p-10 bg-brand-blue rounded-[40px] text-white flex flex-col md:flex-row items-center justify-between gap-8">
+            <div>
+              <h3 className="text-2xl font-black mb-2">Ready to scale your brand?</h3>
+              <p className="text-blue-100">Let's turn these insights into your reality.</p>
+            </div>
+            <button className="bg-brand-orange text-white px-8 py-4 rounded-xl font-black whitespace-nowrap hover:scale-105 transition-all">
+              Work With Us
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="pt-32 pb-24">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-20">
+          <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter">Growth Insights</h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto italic font-medium leading-relaxed text-balance">Expert advice on scaling your brand, marketing strategy, and digital innovation.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {BLOG_POSTS.map((post) => (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              key={post.id} 
+              className="bg-white p-8 sm:p-10 rounded-[40px] border border-gray-100 hover:shadow-2xl transition-all group flex flex-col h-full"
+            >
+              <div className="text-brand-orange font-bold text-xs uppercase tracking-widest mb-4">{post.category}</div>
+              <h3 className="text-2xl text-brand-blue font-black mb-4 group-hover:text-brand-orange transition-colors leading-tight">{post.title}</h3>
+              <p className="text-gray-500 mb-8 flex-grow">{post.excerpt}</p>
+              <div className="flex justify-between items-center text-gray-400 text-sm mt-auto pt-6 border-t border-gray-50">
+                <span>{post.date}</span>
+                <button 
+                  onClick={() => setSelectedPost(post)}
+                  className="font-bold text-brand-blue flex items-center gap-1 group-hover:gap-3 transition-all"
+                >
+                  Read More <ChevronRight size={16} />
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [initialService, setInitialService] = useState('');
+
+  const navigateToContact = (service: string = '') => {
+    setInitialService(service);
+    setCurrentPage('contact');
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -1188,14 +1426,14 @@ export default function App() {
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'home': return <HomePage onCtaClick={() => setCurrentPage('contact')} />;
-      case 'services': return <ServicesPage onCtaClick={() => setCurrentPage('contact')} />;
-      case 'portfolio': return <PortfolioPage onCtaClick={() => setCurrentPage('contact')} />;
-      case 'pricing': return <PricingPage />;
-      case 'about': return <AboutPage />;
+      case 'home': return <HomePage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
+      case 'services': return <ServicesPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
+      case 'portfolio': return <PortfolioPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
+      case 'pricing': return <PricingPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
+      case 'about': return <AboutPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
       case 'blog': return <BlogPage />;
-      case 'contact': return <ContactPage />;
-      default: return <HomePage onCtaClick={() => setCurrentPage('contact')} />;
+      case 'contact': return <ContactPage initialService={initialService} />;
+      default: return <HomePage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
     }
   };
 
