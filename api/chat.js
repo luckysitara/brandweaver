@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default async function handler(req, res) {
   // Set CORS headers for Vercel
@@ -13,15 +13,6 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
-  }
-
-  // Health check for debugging
-  if (req.method === 'GET') {
-    return res.status(200).json({ 
-      status: "alive", 
-      env_key_detected: !!process.env.GEMINI_API_KEY,
-      node_version: process.version
-    });
   }
 
   if (req.method !== 'POST') {
@@ -44,7 +35,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing prompt in request body" });
     }
 
-    const genAI = new GoogleGenAI(apiKey);
+    const genAI = new GoogleGenerativeAI(apiKey);
     // Use gemini-1.5-flash as default
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
