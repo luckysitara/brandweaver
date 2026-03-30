@@ -160,7 +160,7 @@ const Footer = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void }) => (
           The Engine Behind Modern Business Growth.
         </p>
         <p className="text-gray-500 max-w-md mb-8 leading-relaxed italic">
-          📍 Working with brands worldwide — empowering beauty, fashion, and e-commerce businesses to evolve, grow, and win.
+          📍 Working with brands worldwide empowering beauty, fashion, and e-commerce businesses to evolve, grow, and win.
         </p>
         <div className="flex gap-4">
           <a href="https://www.instagram.com/brandweaver.ltd?igsh=enJqNzNkN21odzZo" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
@@ -232,7 +232,7 @@ const HomePage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: P
             <span>GROWTH PARTNER FOR AMBITIOUS BRANDS</span>
           </div>
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.95] md:leading-[0.9] mb-8 text-brand-blue">
-            We Don't Just Market Brands – We Build <span className="text-brand-orange">Growth Engines</span>.
+            We Don't Just Market Brands  We Build <span className="text-brand-orange">Growth Engines</span>.
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 mb-10 max-w-2xl leading-relaxed">
             At Brand Weaver LTD, we transform ambitious fashion, beauty, and e-commerce businesses into scalable global brands by weaving together bold creativity, intelligent AI, seamless web experiences, and powerful marketing strategies to deliver measurable results.
@@ -315,7 +315,7 @@ const HomePage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: P
               Unlike traditional agencies that leave you managing half the work, we deliver <strong>hands-free business growth</strong>.
             </p>
             <p className="text-lg text-blue-200 mb-10 leading-relaxed">
-              From ideation to execution, our team handles everything — content creation, digital strategy, social campaigns, data-driven reporting, and automation — while you focus on the business you love.
+              From ideation to execution, our team handles everything content creation, digital strategy, social campaigns, data-driven reporting, and automation while you focus on the business you love.
             </p>
             <div className="flex flex-wrap gap-4">
               {['Ideation', 'Execution', 'Content Creation', 'Digital Strategy', 'Automation', 'Reporting'].map((item) => (
@@ -356,7 +356,7 @@ const HomePage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: P
               key={i}
               whileHover={{ y: -10 }}
               className="p-10 rounded-[40px] bg-gray-50 border border-gray-100 hover:shadow-2xl transition-all group cursor-pointer"
-              onClick={() => setCurrentPage('portfolio')}
+              onClick={() => setCurrentPage('services')}
             >
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 text-brand-orange shadow-sm group-hover:bg-brand-orange group-hover:text-white transition-all">
                 {item.icon}
@@ -430,7 +430,7 @@ const HomePage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: P
           <div className="order-1 lg:order-2">
             <h2 className="text-4xl md:text-6xl font-black text-brand-blue mb-8 tracking-tighter">We Build Growth Plans, Not Just Campaigns.</h2>
             <p className="text-xl text-gray-600 mb-10 leading-relaxed">
-              Every dollar you invest goes exactly where it matters — into meaningful actions that move your business forward and scale your results.
+              Every dollar you invest goes exactly where it matters into meaningful actions that move your business forward and scale your results.
             </p>
             <div className="space-y-4">
               {['Data-Driven Strategy', 'Custom Execution', 'Measurable ROI', 'Relentless Optimization'].map((item) => (
@@ -451,7 +451,7 @@ const HomePage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: P
         <div className="inline-block bg-brand-orange/10 text-brand-orange px-6 py-2 rounded-full font-black text-sm mb-6 uppercase tracking-widest">Blog & Insights</div>
         <h2 className="text-4xl md:text-6xl font-black text-brand-blue mb-8 tracking-tighter">Learn. Grow. Lead.</h2>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-16 leading-relaxed">
-          Stay ahead with insights, updates, and the latest trends in digital marketing, AI, and branding. We share actionable strategies that help you build the brand of tomorrow — today.
+          Stay ahead with insights, updates, and the latest trends in digital marketing, AI, and branding. We share actionable strategies that help you build the brand of tomorrow today.
         </p>
         <button 
           onClick={() => setCurrentPage('blog')}
@@ -593,10 +593,10 @@ const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: 
         >
           <h1 className="text-5xl md:text-7xl text-brand-blue mb-8 font-black tracking-tighter">About Us</h1>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed italic font-medium text-balance">
-            At Brand Weaver LTD, we are a collective of digital experts united by one goal — helping businesses grow smarter, faster, and stronger through the power of creativity, data, and innovation.
+            At Brand Weaver LTD, we are a collective of digital experts united by one goal  helping businesses grow smarter, faster, and stronger through the power of creativity, data, and innovation.
           </p>
           <p className="text-lg text-gray-500 leading-relaxed mb-10">
-            We bring together specialists in digital strategy, design, social media, branding, AI, web development, and paid media — each expert contributing their unique skill set to build your brand’s growth engine.
+            We bring together specialists in digital strategy, design, social media, branding, AI, web development, and paid media  each expert contributing their unique skill set to build your brand’s growth engine.
           </p>
           <button 
             onClick={() => navigateToContact('Full Scale Growth Partnership')}
@@ -643,7 +643,7 @@ const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: 
         <div className="bg-brand-blue p-12 rounded-[40px] text-white">
           <h3 className="text-brand-orange font-black uppercase tracking-widest text-sm mb-4">Our Mission</h3>
           <p className="text-2xl font-bold leading-relaxed">
-            To empower ambitious brands with digital systems that combine creativity, data, and technology — creating sustainable business growth that lasts.
+            To empower ambitious brands with digital systems that combine creativity, data, and technology creating sustainable business growth that lasts.
           </p>
         </div>
         <div className="bg-brand-orange p-12 rounded-[40px] text-white">
@@ -661,7 +661,7 @@ const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: 
             { title: "Collaboration", desc: "Every win is a team effort between us and our clients." },
             { title: "Creativity", desc: "We craft ideas that demand attention and spark emotion." },
             { title: "Innovation", desc: "We move fast and think ahead, always evolving." },
-            { title: "Excellence", desc: "Results matter — and so does the experience." }
+            { title: "Excellence", desc: "Results matter and so does the experience." }
           ].map((value, i) => (
             <div key={i} className="text-center p-8">
               <div className="w-16 h-16 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange font-black text-2xl mx-auto mb-6">
@@ -747,7 +747,7 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
     }
     return {
       title: "Let’s Talk About Your Project",
-      subtitle: "Get a Custom Quote — Let’s understand your goals and design your growth system.",
+      subtitle: "Get a Custom Quote Let’s understand your goals and design your growth system.",
       buttonText: "Request My Custom Quote →",
       successMsg: "Message Received! Our growth strategists will be in touch within 24 hours."
     };
@@ -940,7 +940,7 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: 
     <div className="max-w-7xl mx-auto px-6 text-center mb-20">
       <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter">Featured Projects</h1>
       <p className="text-xl text-brand-orange font-black uppercase tracking-widest mb-4 italic">Real Brands. Real Growth. Real Results.</p>
-      <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">Every brand we work with gets a custom growth blueprint — from creative direction to automated marketing systems. We blend performance strategy with flawless execution, giving you measurable progress and visible growth at every stage.</p>
+      <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">Every brand we work with gets a custom growth blueprint from creative direction to automated marketing systems. We blend performance strategy with flawless execution, giving you measurable progress and visible growth at every stage.</p>
     </div>
 
     <div className="max-w-7xl mx-auto px-6 mb-32">
@@ -996,7 +996,7 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: 
             </div>
           </div>
           <button 
-            onClick={() => navigateToContact('Branding & Design')}
+            onClick={() => setCurrentPage('services')}
             className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
           >
             View Project Details
@@ -1031,7 +1031,7 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: 
             </div>
           </div>
           <button 
-            onClick={() => navigateToContact('Social Media Marketing')}
+            onClick={() => setCurrentPage('services')}
             className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
           >
             View Project Details
@@ -1077,7 +1077,7 @@ const PricingPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p
     <div className="max-w-7xl mx-auto px-6 text-center mb-20">
       <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter text-balance">Invest in the Systems That Actually Grow Your Business</h1>
       <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-        No two brands start from the same place — and no two need the same path to grow. 
+        No two brands start from the same place  and no two need the same path to grow. 
         Some businesses only need a few smart adjustments to see momentum. Others need bold new content, stronger visibility, or an automated growth system powered by strategy and AI.
       </p>
     </div>
@@ -1087,7 +1087,7 @@ const PricingPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p
         <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange opacity-10 blur-[120px] rounded-full" />
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight">We Don’t Sell Services — We Build <span className="text-brand-orange">Growth Plans</span></h2>
+            <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight">We Don’t Sell Services We Build <span className="text-brand-orange">Growth Plans</span></h2>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
               At Brand Weaver LTD, we don’t price with cookie-cutter tiers. We design pricing around the work required to reach your goals, not arbitrary packages or vanity metrics.
             </p>
@@ -1249,7 +1249,7 @@ const BLOG_POSTS = [
   },
 ];
 
-const BlogPage = () => {
+const BlogPage = ({ navigateToContact }: { navigateToContact: (s?: string) => void }) => {
   const [selectedPost, setSelectedPost] = useState<typeof BLOG_POSTS[0] | null>(null);
 
   if (selectedPost) {
@@ -1279,7 +1279,10 @@ const BlogPage = () => {
               <h3 className="text-2xl font-black mb-2">Ready to scale your brand?</h3>
               <p className="text-blue-100">Let's turn these insights into your reality.</p>
             </div>
-            <button className="bg-brand-orange text-white px-8 py-4 rounded-xl font-black whitespace-nowrap hover:scale-105 transition-all">
+            <button 
+              onClick={() => navigateToContact('Full Scale Growth Partnership')}
+              className="bg-brand-orange text-white px-8 py-4 rounded-xl font-black whitespace-nowrap hover:scale-105 transition-all"
+            >
               Work With Us
             </button>
           </div>
@@ -1345,7 +1348,7 @@ export default function App() {
       case 'portfolio': return <PortfolioPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
       case 'pricing': return <PricingPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
       case 'about': return <AboutPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
-      case 'blog': return <BlogPage />;
+      case 'blog': return <BlogPage navigateToContact={navigateToContact} />;
       case 'contact': return <ContactPage initialService={initialService} />;
       default: return <HomePage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
     }
