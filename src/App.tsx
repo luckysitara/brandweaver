@@ -212,7 +212,7 @@ const Footer = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void }) => (
 
 // Pages
 // Pages
-const HomePage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
+const HomePage = ({ setCurrentPage, navigateToContact, navigateToService }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void, navigateToService: (id: string) => void }) => (
   <div className="overflow-hidden">
     {/* Hero Section */}
     <section className="relative min-h-screen flex items-center pt-20">
@@ -348,15 +348,15 @@ const HomePage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: P
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { title: "Social Media Marketing", icon: <MessageSquare size={32} />, desc: "Turn your socials into revenue streams with strategic content." },
-            { title: "Web Development", icon: <Code size={32} />, desc: "Elegant, modern websites built to convert and perform." },
-            { title: "AI Marketing Solutions", icon: <Zap size={32} />, desc: "Next-gen automation and intelligence for effortless growth." }
+            { id: "social-media", title: "Social Media Marketing", icon: <MessageSquare size={32} />, desc: "Turn your socials into revenue streams with strategic content." },
+            { id: "web-dev", title: "Web Development", icon: <Code size={32} />, desc: "Elegant, modern websites built to convert and perform." },
+            { id: "ai-solutions", title: "AI Marketing Solutions", icon: <Zap size={32} />, desc: "Next-gen automation and intelligence for effortless growth." }
           ].map((item, i) => (
             <motion.div 
               key={i}
               whileHover={{ y: -10 }}
               className="p-10 rounded-[40px] bg-gray-50 border border-gray-100 hover:shadow-2xl transition-all group cursor-pointer"
-              onClick={() => setCurrentPage('services')}
+              onClick={() => navigateToService(item.id)}
             >
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 text-brand-orange shadow-sm group-hover:bg-brand-orange group-hover:text-white transition-all">
                 {item.icon}
@@ -476,6 +476,7 @@ const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (
       <div className="grid grid-cols-1 gap-12 sm:gap-16">
         {[
           { 
+            id: "social-media",
             title: "Social Media Marketing", 
             tagline: "Turn Your Socials into Revenue Streams.",
             icon: <MessageSquare size={40} />, 
@@ -484,6 +485,7 @@ const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (
             who: "Founders, business owners, and creative entrepreneurs who want consistent growth without doing it all themselves."
           },
           { 
+            id: "web-dev",
             title: "Website & App Development + Management", 
             tagline: "Design That Converts. Systems That Perform.",
             icon: <Code size={40} />, 
@@ -492,6 +494,7 @@ const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (
             packages: ["Launch Pad – Get your dream site live fast.", "Scale Engine – Full eCommerce and conversion setup.", "Orbit Suite – Custom platforms and app systems for brands ready to scale globally."]
           },
           { 
+            id: "branding",
             title: "Branding & Design", 
             tagline: "Create a Brand That’s Impossible to Ignore.",
             icon: <Palette size={40} />, 
@@ -500,6 +503,7 @@ const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (
             packages: ["Essence Pack – Start strong with a full brand identity.", "Momentum Visuals – Refresh and elevate your design presence.", "Elite Visual Command – Creative direction for fast-growing brands."]
           },
           { 
+            id: "ads",
             title: "PPC & Media Buying", 
             tagline: "Ads That Perform. Results You Can Measure.",
             icon: <Megaphone size={40} />, 
@@ -508,6 +512,7 @@ const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (
             packages: ["Launch Flow – Test and discover what works.", "Growth Accelerator – Scale your winning campaigns.", "Performance Empire – Multi-channel dominance with high ROI."]
           },
           { 
+            id: "ai-solutions",
             title: "AI Solutions & Automation", 
             tagline: "Smarter Systems. Effortless Growth.",
             isComingSoon: true,
@@ -519,6 +524,7 @@ const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (
         ].map((service, i) => (
           <motion.div 
             key={i}
+            id={service.id}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -684,17 +690,17 @@ const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: 
             { 
               name: "Mirian George", 
               role: "Digital Marketing Strategist",
-              image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400"
+              image: "/miriam.JPG"
             },
             { 
               name: "Rienne", 
               role: "Cyber Security Specialist",
-              image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400"
+              image: "/rienne.jpg"
             },
             { 
               name: "Ogugua Chidinma", 
               role: "Social Media Team Lead",
-              image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&q=80&w=400"
+              image: "/IMG_2102.PNG"
             },
             { 
               name: "Gabriel", 
@@ -1331,19 +1337,38 @@ const BlogPage = ({ navigateToContact }: { navigateToContact: (s?: string) => vo
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [initialService, setInitialService] = useState('');
+  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
 
   const navigateToContact = (service: string = '') => {
     setInitialService(service);
     setCurrentPage('contact');
   };
 
+  const navigateToService = (id: string) => {
+    setSelectedServiceId(id);
+    setCurrentPage('services');
+  };
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentPage]);
+    if (currentPage === 'services' && selectedServiceId) {
+      // Small delay to ensure the DOM is rendered before scrolling
+      const timer = setTimeout(() => {
+        const element = document.getElementById(selectedServiceId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Clear it so it doesn't scroll again on unrelated re-renders
+          setSelectedServiceId(null);
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    } else if (!selectedServiceId) {
+      window.scrollTo(0, 0);
+    }
+  }, [currentPage, selectedServiceId]);
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'home': return <HomePage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
+      case 'home': return <HomePage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} navigateToService={navigateToService} />;
       case 'services': return <ServicesPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
       case 'portfolio': return <PortfolioPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
       case 'pricing': return <PricingPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
