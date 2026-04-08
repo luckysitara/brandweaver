@@ -145,7 +145,7 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
   );
 };
 
-const Footer = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void }) => (
+const Footer = ({ setCurrentPage, navigateToService }: { setCurrentPage: (p: Page) => void, navigateToService: (id: string) => void }) => (
   <footer className="bg-brand-black text-white py-20 font-secondary">
     <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
       <div className="col-span-1 md:col-span-2">
@@ -184,11 +184,11 @@ const Footer = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void }) => (
       <div>
         <h4 className="font-bold text-lg mb-6 text-brand-orange">Growth Solutions</h4>
         <ul className="flex flex-col gap-4 text-gray-400">
-          <li><button onClick={() => setCurrentPage('services')} className="hover:text-white transition-colors text-left">Social Media Marketing</button></li>
-          <li><button onClick={() => setCurrentPage('services')} className="hover:text-white transition-colors text-left">Website & App Dev</button></li>
-          <li><button onClick={() => setCurrentPage('services')} className="hover:text-white transition-colors text-left">AI & Automation</button></li>
-          <li><button onClick={() => setCurrentPage('services')} className="hover:text-white transition-colors text-left">Branding & Design</button></li>
-          <li><button onClick={() => setCurrentPage('services')} className="hover:text-white transition-colors text-left">PPC & Media Buying</button></li>
+          <li><button onClick={() => navigateToService('social-media')} className="hover:text-white transition-colors text-left">Social Media Marketing</button></li>
+          <li><button onClick={() => navigateToService('web-dev')} className="hover:text-white transition-colors text-left">Website & App Dev</button></li>
+          <li><button onClick={() => navigateToService('ai-solutions')} className="hover:text-white transition-colors text-left">AI & Automation</button></li>
+          <li><button onClick={() => navigateToService('branding')} className="hover:text-white transition-colors text-left">Branding & Design</button></li>
+          <li><button onClick={() => navigateToService('ads')} className="hover:text-white transition-colors text-left">PPC & Media Buying</button></li>
         </ul>
       </div>
 
@@ -227,10 +227,6 @@ const HomePage = ({ setCurrentPage, navigateToContact, navigateToService }: { se
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="inline-flex items-center gap-2 bg-brand-orange/10 text-brand-orange px-4 py-2 rounded-full font-bold text-sm mb-6">
-            <Zap size={16} />
-            <span>GROWTH PARTNER FOR AMBITIOUS BRANDS</span>
-          </div>
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.95] md:leading-[0.9] mb-8 text-brand-blue">
             We Don't Just Market Brands  We Build <span className="text-brand-orange">Growth Engines</span>.
           </h1>
@@ -941,7 +937,7 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
   );
 };
 
-const PortfolioPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
+const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void, navigateToService: (id: string) => void }) => (
   <div className="pt-32 pb-24">
     <div className="max-w-7xl mx-auto px-6 text-center mb-20">
       <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter">Featured Projects</h1>
@@ -1002,7 +998,7 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: 
             </div>
           </div>
           <button 
-            onClick={() => setCurrentPage('services')}
+            onClick={() => navigateToService('social-media')}
             className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
           >
             View Project Details
@@ -1037,7 +1033,7 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: 
             </div>
           </div>
           <button 
-            onClick={() => setCurrentPage('services')}
+            onClick={() => navigateToService('social-media')}
             className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
           >
             View Project Details
@@ -1351,15 +1347,22 @@ export default function App() {
 
   useEffect(() => {
     if (currentPage === 'services' && selectedServiceId) {
-      // Small delay to ensure the DOM is rendered before scrolling
+      // Increase delay to ensure exit animation finishes (300ms) + mount
       const timer = setTimeout(() => {
         const element = document.getElementById(selectedServiceId);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const navbarHeight = 100; // Approximate height of fixed navbar
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
           // Clear it so it doesn't scroll again on unrelated re-renders
           setSelectedServiceId(null);
         }
-      }, 100);
+      }, 400);
       return () => clearTimeout(timer);
     } else if (!selectedServiceId) {
       window.scrollTo(0, 0);
@@ -1370,12 +1373,12 @@ export default function App() {
     switch (currentPage) {
       case 'home': return <HomePage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} navigateToService={navigateToService} />;
       case 'services': return <ServicesPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
-      case 'portfolio': return <PortfolioPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
+      case 'portfolio': return <PortfolioPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} navigateToService={navigateToService} />;
       case 'pricing': return <PricingPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
       case 'about': return <AboutPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
       case 'blog': return <BlogPage navigateToContact={navigateToContact} />;
       case 'contact': return <ContactPage initialService={initialService} />;
-      default: return <HomePage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
+      default: return <HomePage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} navigateToService={navigateToService} />;
     }
   };
 
@@ -1395,7 +1398,7 @@ export default function App() {
           </motion.div>
         </AnimatePresence>
       </main>
-      <Footer setCurrentPage={setCurrentPage} />
+      <Footer setCurrentPage={setCurrentPage} navigateToService={navigateToService} />
     </div>
   );
 }
