@@ -41,8 +41,7 @@ const TikTok = ({ size = 20 }: { size?: number }) => (
 );
 
 // Types
-type Page = 'home' | 'services' | 'portfolio' | 'pricing' | 'about' | 'blog' | 'contact';
-
+type Page = 'home' | 'services' | 'portfolio' | 'pricing' | 'about' | 'blog' | 'contact' | 'luxemaneDetails' | 'umojabornDetails';
 // Components
 const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrentPage: (p: Page) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -975,6 +974,9 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
       
       {/* Luxemane Hair */}
       <div className="flex flex-col lg:flex-row gap-16 items-center">
+        <div className="lg:w-1/2 rounded-[40px] overflow-hidden shadow-2xl">
+          <img src="/public/luxma/first.PNG" alt="Luxemane Hair" className="w-full h-auto" />
+        </div>
         <div className="lg:w-1/2">
           <div className="inline-block bg-brand-orange text-white px-4 py-1 rounded-full text-sm font-bold mb-6">BEAUTY & HAIR</div>
           <h3 className="text-4xl sm:text-5xl font-black text-brand-blue mb-8">1. Luxemane Hair</h3>
@@ -998,19 +1000,19 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
             </div>
           </div>
           <button 
-            onClick={() => navigateToService('social-media')}
+            onClick={() => setCurrentPage('luxemaneDetails')}
             className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
           >
-            View Project Details
+            View More
           </button>
-        </div>
-        <div className="lg:w-1/2 rounded-[40px] overflow-hidden shadow-2xl">
-          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=800" alt="Luxemane Hair" className="w-full h-auto" />
         </div>
       </div>
 
       {/* Umojaborn */}
       <div className="flex flex-col lg:flex-row-reverse gap-16 items-center">
+        <div className="lg:w-1/2 rounded-[40px] overflow-hidden shadow-2xl">
+          <video src="/IMG_1199.MP4" alt="Umojaborn" className="w-full h-auto" controls />
+        </div>
         <div className="lg:w-1/2">
           <div className="inline-block bg-brand-orange text-white px-4 py-1 rounded-full text-sm font-bold mb-6">FASHION & CULTURE</div>
           <h3 className="text-4xl sm:text-5xl font-black text-brand-blue mb-8">2. Umojaborn</h3>
@@ -1033,14 +1035,11 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
             </div>
           </div>
           <button 
-            onClick={() => navigateToService('social-media')}
+            onClick={() => setCurrentPage('umojabornDetails')}
             className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
           >
-            View Project Details
+            View More
           </button>
-        </div>
-        <div className="lg:w-1/2 rounded-[40px] overflow-hidden shadow-2xl">
-          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800" alt="Umojaborn" className="w-full h-auto" />
         </div>
       </div>
 
@@ -1330,6 +1329,9 @@ const BlogPage = ({ navigateToContact }: { navigateToContact: (s?: string) => vo
   );
 };
 
+import LuxemaneDetailsPage from './LuxemaneDetailsPage';
+import UmojabornDetailsPage from './UmojabornDetailsPage';
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [initialService, setInitialService] = useState('');
@@ -1378,6 +1380,8 @@ export default function App() {
       case 'about': return <AboutPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
       case 'blog': return <BlogPage navigateToContact={navigateToContact} />;
       case 'contact': return <ContactPage initialService={initialService} />;
+      case 'luxemaneDetails': return <LuxemaneDetailsPage setCurrentPage={setCurrentPage} />;
+      case 'umojabornDetails': return <UmojabornDetailsPage setCurrentPage={setCurrentPage} />;
       default: return <HomePage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} navigateToService={navigateToService} />;
     }
   };
