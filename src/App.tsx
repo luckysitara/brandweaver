@@ -680,7 +680,7 @@ const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: 
           <h2 className="text-4xl md:text-6xl text-brand-blue font-black mb-4 tracking-tighter">Meet the Weavers</h2>
           <p className="text-xl text-brand-orange font-bold uppercase tracking-widest">The Team Behind the Growth Engines</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 text-center">
           {[
             { 
               name: "Mirian George", 
@@ -696,11 +696,6 @@ const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: 
               name: "Ogugua Chidinma", 
               role: "Social Media Team Lead",
               image: "/IMG_2102.PNG"
-            },
-            { 
-              name: "Gabriel", 
-              role: "Branding Specialist",
-              image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400"
             }
           ].map((member, i) => (
             <div key={i} className="group">
