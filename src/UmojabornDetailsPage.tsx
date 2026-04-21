@@ -5,15 +5,15 @@ import { ChevronLeft, CheckCircle2 } from 'lucide-react';
 type Page = 'home' | 'services' | 'portfolio' | 'pricing' | 'about' | 'blog' | 'contact' | 'luxemaneDetails' | 'umojabornDetails';
 
 const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void }) => {
-  const images = [
+  const allImages = [
     '/omo/IMG_1144.PNG',
     '/omo/IMG_1145-1.PNG',
     '/omo/IMG_1145.PNG',
     '/omo/IMG-20260416-WA0000.jpg',
-    '/omo/ins.PNG',
   ];
 
   const videoSrc = "/IMG_1199.MP4"; // The video to be displayed
+  const insImage = '/omo/ins.PNG';
 
   return (
     <div className="pt-32 pb-24 bg-gray-50">
@@ -43,11 +43,27 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
             <video
               className="w-full h-auto rounded-3xl shadow-lg"
               controls
+              autoPlay
+              loop
+              muted
               src={videoSrc}
-              poster={images[0]} // Using the first image as poster
+              poster={insImage}
             >
               Your browser does not support the video tag.
             </video>
+          </div>
+
+          {/* Umojaborn ins.PNG Image */}
+          <div className="mb-12">
+            <motion.img
+              src={insImage}
+              alt="Umojaborn Instagram"
+              className="w-full h-auto rounded-3xl shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5 }}
+            />
           </div>
 
           {/* Project Details */}
@@ -75,9 +91,9 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
             </ul>
           </div>
 
-          {/* Additional Images */}
+          {/* Other Additional Images */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-            {images.map((image, index) => (
+            {allImages.map((image, index) => (
               <motion.img
                 key={index}
                 src={image}

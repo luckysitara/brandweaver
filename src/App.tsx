@@ -974,10 +974,10 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
       
       {/* Luxemane Hair */}
       <div className="flex flex-col lg:flex-row gap-16 items-center">
-        <div className="lg:w-1/2 rounded-[40px] overflow-hidden shadow-2xl">
-          <img src="/public/luxma/first.PNG" alt="Luxemane Hair" className="w-full h-auto" />
-        </div>
         <div className="lg:w-1/2">
+          <div className="rounded-[40px] overflow-hidden shadow-2xl mb-8">
+            <img src="/public/luxma/first.PNG" alt="Luxemane Hair" className="w-full h-auto" />
+          </div>
           <div className="inline-block bg-brand-orange text-white px-4 py-1 rounded-full text-sm font-bold mb-6">BEAUTY & HAIR</div>
           <h3 className="text-4xl sm:text-5xl font-black text-brand-blue mb-8">1. Luxemane Hair</h3>
           <div className="space-y-6 mb-10">
@@ -1006,14 +1006,19 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
             View More
           </button>
         </div>
+        <div className="lg:w-1/2">
+          {/* This column is now intentionally empty to maintain layout symmetry for other elements if needed,
+              or can be removed if a single-column layout is desired for smaller screens.
+              For now, keeping it to avoid breaking other parts of flex layout without full context. */}
+        </div>
       </div>
 
       {/* Umojaborn */}
       <div className="flex flex-col lg:flex-row-reverse gap-16 items-center">
-        <div className="lg:w-1/2 rounded-[40px] overflow-hidden shadow-2xl">
-          <video src="/IMG_1199.MP4" alt="Umojaborn" className="w-full h-auto" controls />
-        </div>
         <div className="lg:w-1/2">
+          <div className="rounded-[40px] overflow-hidden shadow-2xl mb-8">
+            <video src="/IMG_1199.MP4" alt="Umojaborn" className="w-full h-auto" controls autoPlay loop muted />
+          </div>
           <div className="inline-block bg-brand-orange text-white px-4 py-1 rounded-full text-sm font-bold mb-6">FASHION & CULTURE</div>
           <h3 className="text-4xl sm:text-5xl font-black text-brand-blue mb-8">2. Umojaborn</h3>
           <div className="space-y-6 mb-10">
@@ -1040,6 +1045,11 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
           >
             View More
           </button>
+        </div>
+        <div className="lg:w-1/2">
+          {/* This column is now intentionally empty to maintain layout symmetry for other elements if needed,
+              or can be removed if a single-column layout is desired for smaller screens.
+              For now, keeping it to avoid breaking other parts of flex layout without full context. */}
         </div>
       </div>
 
