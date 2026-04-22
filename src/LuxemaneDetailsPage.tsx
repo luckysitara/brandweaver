@@ -7,11 +7,11 @@ type Page = 'home' | 'services' | 'portfolio' | 'pricing' | 'about' | 'blog' | '
 const LuxemaneDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void }) => {
   const images = [
     '/luxma/insta.PNG',
-    '/luxma/IMG_7795.JPG',
+    '/luxma/first.JPG', // Replaced IMG_7795.JPG
     '/luxma/IMG_7797.JPG',
     '/luxma/IMG_7811.JPG',
     '/luxma/IMG_7814.JPG',
-    '/luxma/IMG_7816.JPG',
+    '/luxma/IMG.PNG',     // Replaced IMG_7816.JPG
   ];
 
   return (
@@ -91,7 +91,7 @@ const LuxemaneDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) => 
               <motion.img
                 key={index}
                 src={image}
-                alt={`Luxemane Hair - Additional Shot ${index + 1}`}
+                alt={`Luxemane Hair Image`}
                 className="w-full h-auto rounded-2xl shadow-md border border-gray-100"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

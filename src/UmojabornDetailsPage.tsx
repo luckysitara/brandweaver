@@ -8,7 +8,6 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
   const allImages = [
     '/omo/IMG_1144.PNG',
     '/omo/IMG_1145-1.PNG',
-    '/omo/IMG_1145.PNG',
     '/omo/IMG-20260416-WA0000.jpg',
   ];
 
@@ -43,9 +42,6 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
             <video
               className="w-full h-auto rounded-3xl shadow-lg"
               controls
-              autoPlay
-              loop
-              muted
               src={videoSrc}
               poster={insImage}
             >
@@ -97,7 +93,7 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
               <motion.img
                 key={index}
                 src={image}
-                alt={`Umojaborn - Additional Shot ${index + 1}`}
+                alt={`Umojaborn Image`}
                 className="w-full h-auto rounded-2xl shadow-md border border-gray-100"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
