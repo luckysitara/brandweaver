@@ -970,8 +970,10 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
       {/* Luxemane Hair */}
       <div className="flex flex-col gap-16 items-center">
         <div className="w-full">
-          <div className="rounded-[40px] overflow-hidden shadow-2xl mb-8">
-            <img src="/luxma/first.PNG" alt="Luxemane Hair" className="w-full h-auto" />
+          <div className="flex justify-center mb-8">
+            <div className="w-[450px] h-[600px] flex items-center justify-center">
+              <img src="/luxma/first.PNG" alt="Luxemane Hair" className="max-w-full max-h-full rounded-[40px] shadow-2xl object-contain" />
+            </div>
           </div>
           <div className="inline-block bg-brand-orange text-white px-4 py-1 rounded-full text-sm font-bold mb-6">BEAUTY & HAIR</div>
           <h3 className="text-4xl sm:text-5xl font-black text-brand-blue mb-8"> Luxemane Hair</h3>
@@ -1006,9 +1008,11 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
       {/* Umojaborn */}
       <div className="flex flex-col gap-16 items-center">
         <div className="w-full">
-          <div className="rounded-[40px] overflow-hidden shadow-2xl mb-8">
-            <video src="/IMG_1199.MP4" alt="Umojaborn" className="w-full h-auto" controls autoPlay loop muted />
-          </div>
+          <div className="flex justify-center mb-8">
+            <div className="w-full max-w-[800px] h-[600px] flex items-center justify-center">
+              <video src="/IMG_1199.MP4" alt="Umojaborn" className="max-w-full max-h-full rounded-[40px] shadow-2xl object-contain" controls autoPlay loop muted playsInline />
+            </div>
+          </div> 
           <div className="inline-block bg-brand-orange text-white px-4 py-1 rounded-full text-sm font-bold mb-6">FASHION & CULTURE</div>
           <h3 className="text-4xl sm:text-5xl font-black text-brand-blue mb-8"> Umojaborn</h3>
           <div className="space-y-6 mb-10">

@@ -39,22 +39,28 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
           {/* Video Section */}
           <div className="mb-12">
             <h3 className="text-3xl font-black text-brand-blue mb-6 text-center">Campaign Highlight Video</h3>
-            <video
-              className="w-full h-auto rounded-3xl shadow-lg"
-              controls
-              src={videoSrc}
-              poster={insImage}
-            >
-              Your browser does not support the video tag.
-            </video>
+            <div className="flex justify-center">
+              <video
+                className="max-h-[600px] w-auto rounded-3xl shadow-lg object-contain"
+                controls
+                autoPlay
+                loop
+                muted
+                playsInline
+                src={videoSrc}
+                poster={insImage}
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
           </div>
 
           {/* Umojaborn ins.PNG Image */}
-          <div className="mb-12">
+          <div className="mb-12 flex justify-center">
             <motion.img
               src={insImage}
               alt="Umojaborn Instagram"
-              className="w-full h-auto rounded-3xl shadow-lg"
+              className="max-h-[600px] w-auto rounded-3xl shadow-lg object-contain"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}

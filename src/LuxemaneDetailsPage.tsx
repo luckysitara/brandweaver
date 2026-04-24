@@ -37,14 +37,16 @@ const LuxemaneDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) => 
           </p>
 
           {/* Main Image */}
-          <motion.img
-            src={images[0]}
-            alt="Luxemane Hair Instagram Feed"
-            className="w-full h-auto rounded-3xl mb-12 shadow-lg"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          />
+          <div className="flex justify-center mb-12">
+            <motion.img
+              src={images[0]}
+              alt="Luxemane Hair Instagram Feed"
+              className="max-h-[600px] w-auto rounded-3xl shadow-lg object-contain"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            />
+          </div>
 
           {/* Project Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
@@ -75,14 +77,20 @@ const LuxemaneDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) => 
           {/* Video Section */}
           <div className="mb-12">
             <h3 className="text-3xl font-black text-brand-blue mb-6 text-center">Campaign Highlight Video</h3>
-            <video
-              className="w-full h-auto rounded-3xl shadow-lg"
-              controls
-              src="/IMG_8357.MOV"
-              poster="/luxma/insta.PNG"
-            >
-              Your browser does not support the video tag.
-            </video>
+            <div className="flex justify-center">
+              <video
+                className="max-h-[600px] w-auto rounded-3xl shadow-lg object-contain"
+                controls
+                autoPlay
+                loop
+                muted
+                playsInline
+                src="/IMG_8357.MOV"
+                poster="/luxma/insta.PNG"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
           </div>
 
           {/* Additional Images */}
