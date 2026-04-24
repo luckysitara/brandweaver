@@ -145,44 +145,44 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
 };
 
 const Footer = ({ setCurrentPage, navigateToService }: { setCurrentPage: (p: Page) => void, navigateToService: (id: string) => void }) => (
-  <footer className="bg-brand-black text-white py-20 font-secondary">
-    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+  <footer className="bg-brand-black text-white py-12 font-secondary">
+    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
       <div className="col-span-1 md:col-span-2">
-        <div className="flex items-center mb-6 group cursor-pointer" onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+        <div className="flex items-center mb-4 group cursor-pointer" onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
           <img 
             src="/logo.png" 
             alt="Brand Weaver Logo" 
-            className="h-24 w-auto object-contain transform group-hover:scale-110 transition-all duration-500"
+            className="h-16 w-auto object-contain transform group-hover:scale-110 transition-all duration-500"
           />
         </div>
-        <p className="text-gray-400 max-w-md mb-4 leading-relaxed font-bold">
+        <p className="text-gray-400 max-w-md mb-2 leading-relaxed font-bold">
           The Engine Behind Modern Business Growth.
         </p>
-        <p className="text-gray-500 max-w-md mb-8 leading-relaxed italic">
+        <p className="text-gray-500 max-w-md mb-4 leading-relaxed italic text-sm">
           📍 Working with brands worldwide empowering beauty, fashion, and e-commerce businesses to evolve, grow, and win.
         </p>
         <div className="flex gap-4">
-          <a href="https://www.instagram.com/brandweaver.ltd?igsh=enJqNzNkN21odzZo" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
-            <Instagram size={20} />
+          <a href="https://www.instagram.com/brandweaver.ltd?igsh=enJqNzNkN21odzZo" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
+            <Instagram size={18} />
           </a>
-          <a href="https://www.linkedin.com/company/brand-weaver-ltd/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
-            <Linkedin size={20} />
+          <a href="https://www.linkedin.com/company/brand-weaver-ltd/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
+            <Linkedin size={18} />
           </a>
-          <a href="https://www.facebook.com/share/18EuQwRZFL/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
-            <Facebook size={20} />
+          <a href="https://www.facebook.com/share/18EuQwRZFL/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
+            <Facebook size={18} />
           </a>
-          <a href="https://x.com/brandweaverltd?s=21" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
-            <Twitter size={20} />
+          <a href="https://x.com/brandweaverltd?s=21" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
+            <Twitter size={18} />
           </a>
-          <a href="https://www.tiktok.com/@brandweaver?_r=1&_t=ZS-952yfkUEAGP" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
-            <TikTok size={20} />
+          <a href="https://www.tiktok.com/@brandweaver?_r=1&_t=ZS-952yfkUEAGP" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-orange transition-colors">
+            <TikTok size={18} />
           </a>
         </div>
       </div>
       
       <div>
-        <h4 className="font-bold text-lg mb-6 text-brand-orange">Growth Solutions</h4>
-        <ul className="flex flex-col gap-4 text-gray-400">
+        <h4 className="font-bold text-base mb-4 text-brand-orange">Growth Solutions</h4>
+        <ul className="flex flex-col gap-2 text-gray-400 text-sm">
           <li><button onClick={() => navigateToService('social-media')} className="hover:text-white transition-colors text-left">Social Media Marketing</button></li>
           <li><button onClick={() => navigateToService('web-dev')} className="hover:text-white transition-colors text-left">Website & App Dev</button></li>
           <li><button onClick={() => navigateToService('ai-solutions')} className="hover:text-white transition-colors text-left">AI & Automation</button></li>
@@ -192,8 +192,8 @@ const Footer = ({ setCurrentPage, navigateToService }: { setCurrentPage: (p: Pag
       </div>
 
       <div>
-        <h4 className="font-bold text-lg mb-6 text-brand-orange">Quick Links</h4>
-        <ul className="flex flex-col gap-4 text-gray-400">
+        <h4 className="font-bold text-base mb-4 text-brand-orange">Quick Links</h4>
+        <ul className="flex flex-col gap-2 text-gray-400 text-sm">
           <li><button onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-white transition-colors text-left">Home</button></li>
           <li><button onClick={() => setCurrentPage('about')} className="hover:text-white transition-colors text-left">About Us</button></li>
           <li><button onClick={() => setCurrentPage('portfolio')} className="hover:text-white transition-colors text-left">Our Work</button></li>
@@ -203,7 +203,7 @@ const Footer = ({ setCurrentPage, navigateToService }: { setCurrentPage: (p: Pag
         </ul>
       </div>
     </div>
-    <div className="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-white/10 text-center text-gray-500 text-sm">
+    <div className="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-white/10 text-center text-gray-500 text-xs">
       &copy; {new Date().getFullYear()} Brand Weaver LTD. All rights reserved.
     </div>
   </footer>
