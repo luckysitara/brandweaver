@@ -63,32 +63,38 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {/* Before */}
             <div className="text-center">
-              <motion.img
-                src={'/omo/ins.PNG'}
-                alt="Umojaborn Instagram Before"
-                className="w-full h-auto rounded-3xl shadow-lg border border-gray-100"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              />
-              <div className="mt-4 inline-block bg-gray-200 text-gray-800 px-4 py-2 rounded-full font-bold">
+              <div className="mb-4 inline-block bg-gray-200 text-gray-800 px-6 py-2 rounded-full font-bold uppercase tracking-wider text-xs shadow-sm">
                 Before
+              </div>
+              <div className="overflow-hidden rounded-3xl shadow-lg border border-gray-100">
+                <motion.img
+                  src={'/omo/ins.PNG'}
+                  alt="Umojaborn Instagram Before"
+                  className="w-full h-auto"
+                  style={{ clipPath: 'inset(6% 0 0 0)', marginTop: '-6%' }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                />
               </div>
             </div>
             {/* After */}
             <div className="text-center">
-              <motion.img
-                src={'/omo/ins1.PNG'}
-                alt="Umojaborn Instagram After"
-                className="w-full h-auto rounded-3xl shadow-lg border border-gray-100"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              />
-              <div className="mt-4 inline-block bg-brand-blue text-white px-4 py-2 rounded-full font-bold">
+              <div className="mb-4 inline-block bg-brand-blue text-white px-6 py-2 rounded-full font-bold uppercase tracking-wider text-xs shadow-sm">
                 After
+              </div>
+              <div className="overflow-hidden rounded-3xl shadow-lg border border-gray-100">
+                <motion.img
+                  src={'/omo/ins1.PNG'}
+                  alt="Umojaborn Instagram After"
+                  className="w-full h-auto"
+                  style={{ clipPath: 'inset(6% 0 0 0)', marginTop: '-6%' }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                />
               </div>
             </div>
           </div>
