@@ -70,14 +70,14 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
                 <motion.img
                   src={'/omo/ins.PNG'}
                   alt="Umojaborn Instagram Before"
+                  loading="lazy"
                   className="w-full h-auto"
                   style={{ clipPath: 'inset(6% 0 0 0)', marginTop: '-6%' }}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
-                />
-              </div>
+                />              </div>
             </div>
             {/* After */}
             <div className="text-center">
@@ -88,6 +88,7 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
                 <motion.img
                   src={'/omo/ins1.PNG'}
                   alt="Umojaborn Instagram After"
+                  loading="lazy"
                   className="w-full h-auto"
                   style={{ clipPath: 'inset(6% 0 0 0)', marginTop: '-6%' }}
                   initial={{ opacity: 0, y: 20 }}
@@ -133,6 +134,7 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
                 key={index}
                 src={image}
                 alt={`Umojaborn Image`}
+                loading="lazy"
                 className="w-full h-auto rounded-2xl shadow-md border border-gray-100"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

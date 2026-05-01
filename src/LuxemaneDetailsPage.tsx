@@ -41,6 +41,7 @@ const LuxemaneDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) => 
             <motion.img
               src={images[0]}
               alt="Luxemane Hair Instagram Feed"
+              loading="lazy"
               className="max-h-[600px] w-auto rounded-3xl shadow-lg object-contain"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -100,6 +101,7 @@ const LuxemaneDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) => 
                 key={index}
                 src={image}
                 alt={`Luxemane Hair Image`}
+                loading="lazy"
                 className="w-full h-auto rounded-2xl shadow-md border border-gray-100"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

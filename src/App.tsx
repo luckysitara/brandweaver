@@ -972,7 +972,7 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
         <div className="w-full">
           <div className="flex justify-center mb-8">
             <div className="w-[450px] h-[600px] flex items-center justify-center">
-              <img src="/luxma/first.PNG" alt="Luxemane Hair" className="max-w-full max-h-full rounded-[40px] shadow-2xl object-contain" />
+              <img src="/luxma/first.PNG" alt="Luxemane Hair" loading="lazy" className="max-w-full max-h-full rounded-[40px] shadow-2xl object-contain" />
             </div>
           </div>
           <div className="inline-block bg-brand-orange text-white px-4 py-1 rounded-full text-sm font-bold mb-6">BEAUTY & HAIR</div>
