@@ -55,18 +55,45 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
             </div>
           </div>
 
-          {/* Umojaborn ins.PNG Image */}
-          <div className="mb-12 flex justify-center">
-            <motion.img
-              src={insImage}
-              alt="Umojaborn Instagram"
-              className="max-h-[600px] w-auto rounded-3xl shadow-lg object-contain"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.5 }}
-            />
+          {/* Before and After Section */}
+          <div className="text-center mb-16">
+            <h3 className="text-3xl font-black text-brand-blue mb-2">Before & After</h3>
+            <p className="text-lg text-gray-500">A snapshot of follower growth and engagement.</p>
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            {/* Before */}
+            <div className="text-center">
+              <motion.img
+                src={'/omo/ins.PNG'}
+                alt="Umojaborn Instagram Before"
+                className="w-full h-auto rounded-3xl shadow-lg border border-gray-100"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+              />
+              <div className="mt-4 inline-block bg-gray-200 text-gray-800 px-4 py-2 rounded-full font-bold">
+                Before
+              </div>
+            </div>
+            {/* After */}
+            <div className="text-center">
+              <motion.img
+                src={'/omo/ins1.PNG'}
+                alt="Umojaborn Instagram After"
+                className="w-full h-auto rounded-3xl shadow-lg border border-gray-100"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              />
+              <div className="mt-4 inline-block bg-brand-blue text-white px-4 py-2 rounded-full font-bold">
+                After
+              </div>
+            </div>
+          </div>
+          
+          {/* Umojaborn ins.PNG Image - This section is now replaced by the above */}
 
           {/* Project Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">

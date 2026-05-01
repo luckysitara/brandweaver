@@ -255,7 +255,7 @@ const HomePage = ({ setCurrentPage, navigateToContact, navigateToService }: { se
         >
           <div className="relative z-10 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-4 sm:border-8 border-white">
             <img 
-              src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800" 
+              src="/IMG_4544.JPG" 
               alt="Strategic Planning" 
               className="w-full h-auto"
               referrerPolicy="no-referrer"
