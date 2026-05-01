@@ -69,12 +69,11 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
           className="flex items-center cursor-pointer group"
           onClick={() => setCurrentPage('home')}
         >
-          <img 
-            src="/logo.png" 
-            alt="Brandweaver Logo" 
-            className="h-20 w-auto object-contain transform group-hover:scale-110 transition-all duration-500"
-          />
-        </div>
+          <img
+            src="/logo.png"
+            alt="Brandweaver Logo"
+            className="h-28 w-auto object-contain transform group-hover:scale-105 transition-all duration-500 filter contrast-[1.1]"
+          />        </div>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
@@ -149,12 +148,11 @@ const Footer = ({ setCurrentPage, navigateToService }: { setCurrentPage: (p: Pag
     <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
       <div className="col-span-1 md:col-span-2">
         <div className="flex items-center mb-4 group cursor-pointer" onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-          <img 
-            src="/logo.png" 
-            alt="Brand Weaver Logo" 
-            className="h-16 w-auto object-contain transform group-hover:scale-110 transition-all duration-500"
-          />
-        </div>
+          <img
+            src="/logo.png"
+            alt="Brand Weaver Logo"
+            className="h-24 w-auto object-contain transform group-hover:scale-105 transition-all duration-500 filter contrast-[1.1]"
+          />        </div>
         <p className="text-gray-400 max-w-md mb-2 leading-relaxed font-bold">
           The Engine Behind Modern Business Growth.
         </p>
