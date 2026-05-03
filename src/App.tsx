@@ -901,7 +901,7 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
                 <div className="space-y-2">
                   <label className="font-black text-xs uppercase tracking-widest text-gray-400">Estimated Budget</label>
                   <select name="budget" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all">
-                    <option>&lt; $300–$500</option>
+                    <option>$300–$500</option>
                     <option>$550–$800</option>
                     <option>$1000–$1500</option>
                   </select>
@@ -1194,7 +1194,7 @@ const BLOG_POSTS = [
       <h3>The Opportunity Cost</h3>
       <p>Every hour you spend trying to figure out Meta Ads or editing a TikTok video is an hour you aren't spending on product innovation, partnership deals, or high-level vision. The math simply doesn't add up for long-term growth.</p>
       <h3>The Expertise Gap</h3>
-      <p>Digital marketing in 2024 isn't just about posting; it's about data architecture, creative psychology, and platform-specific algorithms. A founder can't be an expert in all of these while also running a company.</p>
+      <p>Digital marketing in 2025 isn't just about posting; it's about data architecture, creative psychology, and platform-specific algorithms. A founder can't be an expert in all of these while also running a company.</p>
       <p>To win, you need to weave together a team of specialists who live and breathe growth, so you can focus on leading.</p>
     `
    },
