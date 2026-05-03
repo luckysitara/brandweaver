@@ -66,17 +66,11 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
               <div className="mb-4 inline-block bg-gray-200 text-gray-800 px-6 py-2 rounded-full font-bold uppercase tracking-wider text-xs shadow-sm">
                 Before
               </div>
-              <div className="overflow-hidden rounded-3xl shadow-lg border border-gray-100">
-                <motion.img
-                  src="/omo/before.jpg?v=final-1"
+              <div className="rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
+                <img
+                  src="/omo/before.jpg"
                   alt="Umojaborn Instagram Before"
-                  loading="lazy"
                   className="w-full h-auto"
-                  style={{ clipPath: 'inset(6% 0 0 0)', marginTop: '-6%' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
                 />
               </div>
             </div>
@@ -85,17 +79,11 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
               <div className="mb-4 inline-block bg-brand-blue text-white px-6 py-2 rounded-full font-bold uppercase tracking-wider text-xs shadow-sm">
                 After
               </div>
-              <div className="overflow-hidden rounded-3xl shadow-lg border border-gray-100">
-                <motion.img
-                  src="/omo/after.jpg?v=final-1"
+              <div className="rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
+                <img
+                  src="/omo/after.jpg"
                   alt="Umojaborn Instagram After"
-                  loading="lazy"
                   className="w-full h-auto"
-                  style={{ clipPath: 'inset(6% 0 0 0)', marginTop: '-6%' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
                 />
               </div>
             </div>
