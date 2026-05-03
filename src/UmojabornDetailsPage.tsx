@@ -63,7 +63,7 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {/* Before */}
             <div className="text-center">
-              <div className="mb-4 inline-block bg-gray-200 text-gray-800 px-6 py-2 rounded-full font-bold uppercase tracking-wider text-xs shadow-sm">
+              <div className="mb-4 inline-block bg-brand-blue text-white px-6 py-2 rounded-full font-bold uppercase tracking-wider text-xs shadow-sm">
                 Before
               </div>
               <div className="rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
