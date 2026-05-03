@@ -68,7 +68,7 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
               </div>
               <div className="overflow-hidden rounded-3xl shadow-lg border border-gray-100">
                 <motion.img
-                  src="/omo/before.jpg"
+                  src="/omo/before.jpg?v=final-1"
                   alt="Umojaborn Instagram Before"
                   loading="lazy"
                   className="w-full h-auto"
@@ -87,7 +87,7 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
               </div>
               <div className="overflow-hidden rounded-3xl shadow-lg border border-gray-100">
                 <motion.img
-                  src="/omo/after.png"
+                  src="/omo/after.jpg?v=final-1"
                   alt="Umojaborn Instagram After"
                   loading="lazy"
                   className="w-full h-auto"
