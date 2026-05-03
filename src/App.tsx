@@ -572,7 +572,7 @@ const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (
                 onClick={() => navigateToContact(service.title)}
                 className={`w-full py-5 rounded-2xl font-black text-lg sm:text-xl transition-all shadow-xl hover:scale-105 active:scale-95 ${i % 2 === 0 ? 'bg-brand-blue text-white hover:bg-brand-orange' : 'bg-brand-orange text-white hover:bg-brand-blue'}`}
               >
-                {service.isComingSoon ? 'Get Early Access' : 'Book a Consultation'}
+                {service.isComingSoon ? 'Get Early Access' : 'Start My Growth Plan'}
               </button>
             </div>
           </motion.div>
@@ -901,10 +901,9 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
                 <div className="space-y-2">
                   <label className="font-black text-xs uppercase tracking-widest text-gray-400">Estimated Budget</label>
                   <select name="budget" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all">
-                    <option>&lt; 300k</option>
-                    <option>350k–700k</option>
-                    <option>700k–950k</option>
-                    <option>1M+</option>
+                    <option>&lt; $300–$500</option>
+                    <option>$550–$800</option>
+                    <option>$1000–$1500</option>
                   </select>
                 </div>
                 <div className="space-y-2">
@@ -1187,7 +1186,7 @@ const BLOG_POSTS = [
   { 
     id: 1,
     title: "Why Founders Shouldn't DIY Their Marketing", 
-    date: "Oct 12, 2023", 
+    date: "Oct 12, 2025", 
     category: "Strategy",
     excerpt: "The hidden costs of 'doing it all' and why expert delegation is the real secret to scaling your brand.",
     content: `
@@ -1198,53 +1197,8 @@ const BLOG_POSTS = [
       <p>Digital marketing in 2024 isn't just about posting; it's about data architecture, creative psychology, and platform-specific algorithms. A founder can't be an expert in all of these while also running a company.</p>
       <p>To win, you need to weave together a team of specialists who live and breathe growth, so you can focus on leading.</p>
     `
-  },
-  { 
-    id: 2,
-    title: "The Power of Consistency in Brand Growth", 
-    date: "Oct 05, 2023", 
-    category: "Growth",
-    excerpt: "How a unified brand voice across all platforms creates the trust needed for high-value conversions.",
-    content: `
-      <p>Consistency is the most underrated marketing strategy. In a world of noise, the brand that remains steady is the one that gets remembered.</p>
-      <h3>Trust is Built Through Repetition</h3>
-      <p>A customer needs to see your brand 7 to 12 times before they feel comfortable making a purchase. If your message changes every time, you reset that clock.</p>
-      <h3>Visual Cohesion</h3>
-      <p>Whether it's your website, your Instagram feed, or your email newsletter, the "vibe" must be identical. This creates a professional image that justifies premium pricing.</p>
-    `
-  },
-  { 
-    id: 3,
-    title: "Strategy Over Vibes: Converting Visitors into Clients", 
-    date: "Sep 28, 2023", 
-    category: "Conversion",
-    excerpt: "Stop chasing likes and start chasing ROI. Learn how to optimize your funnel for actual sales.",
-    content: `<p>Vibes don't pay bills. While aesthetic is important, strategy is what converts a visitor into a paying client.</p><h3>The Conversion Funnel</h3><p>You need to guide your audience from awareness to consideration, and finally to the sale. This requires clear CTAs (Call to Actions) and a frictionless user experience.</p>`
-  },
-  { 
-    id: 4,
-    title: "Social Media Trends to Watch in 2024", 
-    date: "Sep 21, 2023", 
-    category: "Social",
-    excerpt: "Short-form video is evolving. Here is how your brand can stay ahead of the algorithm.",
-    content: `<p>The algorithm is changing. 2024 is the year of "Social SEO" and community-first content.</p>`
-  },
-  { 
-    id: 5,
-    title: "Building a Visual Identity that Commands Attention", 
-    date: "Sep 14, 2023", 
-    category: "Branding",
-    excerpt: "Your brand is more than a logo. It is a story told through every pixel and color choice.",
-    content: `<p>Design is the silent ambassador of your brand. If your visuals aren't commanding attention, you're losing money.</p>`
-  },
-  { 
-    id: 6,
-    title: "How to Measure Marketing ROI Effectively", 
-    date: "Sep 07, 2023", 
-    category: "Analytics",
-    excerpt: "If you can't measure it, you can't grow it. A guide to the metrics that actually matter for your bottom line.",
-    content: `<p>Stop looking at vanity metrics like 'likes'. Start looking at CAC (Customer Acquisition Cost) and LTV (Lifetime Value).</p>`
-  },
+   },
+  
 ];
 
 const BlogPage = ({ navigateToContact }: { navigateToContact: (s?: string) => void }) => {
@@ -1297,14 +1251,14 @@ const BlogPage = ({ navigateToContact }: { navigateToContact: (s?: string) => vo
           <p className="text-xl text-gray-600 max-w-2xl mx-auto italic font-medium leading-relaxed text-balance">Expert advice on scaling your brand, marketing strategy, and digital innovation.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="flex flex-wrap justify-center gap-8">
           {BLOG_POSTS.map((post) => (
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               key={post.id} 
-              className="bg-white p-8 sm:p-10 rounded-[40px] border border-gray-100 hover:shadow-2xl transition-all group flex flex-col h-full"
+              className="bg-white p-8 sm:p-10 rounded-[40px] border border-gray-100 hover:shadow-2xl transition-all group flex flex-col h-full max-w-md w-full"
             >
               <div className="text-brand-orange font-bold text-xs uppercase tracking-widest mb-4">{post.category}</div>
               <h3 className="text-2xl text-brand-blue font-black mb-4 group-hover:text-brand-orange transition-colors leading-tight">{post.title}</h3>
