@@ -212,7 +212,7 @@ const Footer = ({ setCurrentPage, navigateToService }: { setCurrentPage: (p: Pag
 const HomePage = ({ setCurrentPage, navigateToContact, navigateToService }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void, navigateToService: (id: string) => void }) => (
   <div className="overflow-hidden">
     {/* Hero Section */}
-    <section className="relative min-h-screen flex items-center pt-32 md:pt-40">
+    <section className="relative min-h-screen flex items-center pt-40 md:pt-48 lg:pt-56 pb-20">
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-blue/5 rounded-bl-[200px]" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-orange/10 rounded-full blur-3xl" />
@@ -224,7 +224,7 @@ const HomePage = ({ setCurrentPage, navigateToContact, navigateToService }: { se
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] md:leading-[1.05] mb-8 text-brand-blue">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.2] md:leading-[1.15] mb-8 text-brand-blue">
             We Don't Just Market Brands  We Build <span className="text-brand-orange">Growth Engines</span>.
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 mb-10 max-w-2xl leading-relaxed">
@@ -458,7 +458,7 @@ const HomePage = ({ setCurrentPage, navigateToContact, navigateToService }: { se
 );
 
 const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
-  <div className="pt-32 pb-24">
+  <div className="pt-40 md:pt-48 pb-24">
     <div className="max-w-7xl mx-auto px-6">
       <div className="text-center mb-20">
         <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter">Our Services</h1>
@@ -583,7 +583,7 @@ const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (
 );
 
 const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
-  <div className="pt-32 pb-24">
+  <div className="pt-40 md:pt-48 pb-24">
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-32">
         <motion.div
@@ -792,7 +792,7 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
   };
 
   return (
-    <div className="pt-32 pb-24">
+    <div className="pt-40 md:pt-48 pb-24">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
           <div>
@@ -930,7 +930,7 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
 };
 
 const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void, navigateToService: (id: string) => void }) => (
-  <div className="pt-32 pb-24">
+  <div className="pt-40 md:pt-48 pb-24">
     <div className="max-w-7xl mx-auto px-6 text-center mb-20">
       <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter">Featured Projects</h1>
       <p className="text-xl text-brand-orange font-black uppercase tracking-widest mb-4 italic">Real Brands. Real Growth. Real Results.</p>
@@ -1071,7 +1071,7 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
 );
 
 const PricingPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
-  <div className="pt-32 pb-24">
+  <div className="pt-40 md:pt-48 pb-24">
     <div className="max-w-7xl mx-auto px-6 text-center mb-20">
       <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter text-balance">Invest in the Systems That Actually Grow Your Business</h1>
       <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -1252,7 +1252,7 @@ const BlogPage = ({ navigateToContact }: { navigateToContact: (s?: string) => vo
 
   if (selectedPost) {
     return (
-      <div className="pt-32 pb-24">
+      <div className="pt-40 md:pt-48 pb-24">
         <div className="max-w-4xl mx-auto px-6">
           <button 
             onClick={() => setSelectedPost(null)}
@@ -1290,7 +1290,7 @@ const BlogPage = ({ navigateToContact }: { navigateToContact: (s?: string) => vo
   }
 
   return (
-    <div className="pt-32 pb-24">
+    <div className="pt-40 md:pt-48 pb-24">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
           <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter">Growth Insights</h1>

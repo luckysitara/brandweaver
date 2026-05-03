@@ -15,7 +15,7 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
   const insImage = '/omo/ins.PNG';
 
   return (
-    <div className="pt-32 pb-24 bg-gray-50">
+    <div className="pt-40 md:pt-48 pb-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
         <button
           onClick={() => setCurrentPage('portfolio')}
