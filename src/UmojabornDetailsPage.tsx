@@ -12,7 +12,7 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
   ];
 
   const videoSrc = "/IMG_1199.MP4"; // The video to be displayed
-  const insImage = '/omo/ins.PNG';
+  const insImage = '/omo/before.jpg';
 
   return (
     <div className="pt-40 md:pt-48 pb-24 bg-gray-50">
@@ -68,7 +68,7 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
               </div>
               <div className="overflow-hidden rounded-3xl shadow-lg border border-gray-100">
                 <motion.img
-                  src={'/omo/ins.PNG'}
+                  src="/omo/before.jpg"
                   alt="Umojaborn Instagram Before"
                   loading="lazy"
                   className="w-full h-auto"
@@ -77,7 +77,8 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
-                />              </div>
+                />
+              </div>
             </div>
             {/* After */}
             <div className="text-center">
@@ -86,7 +87,7 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
               </div>
               <div className="overflow-hidden rounded-3xl shadow-lg border border-gray-100">
                 <motion.img
-                  src={'/omo/ins1.PNG'}
+                  src="/omo/after.png"
                   alt="Umojaborn Instagram After"
                   loading="lazy"
                   className="w-full h-auto"
