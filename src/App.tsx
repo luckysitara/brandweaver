@@ -1283,10 +1283,55 @@ const BlogPage = ({ navigateToContact }: { navigateToContact: (s?: string) => vo
 import LuxemaneDetailsPage from './LuxemaneDetailsPage';
 import UmojabornDetailsPage from './UmojabornDetailsPage';
 
+const ConsultationPopup = ({ onClose, onAction }: { onClose: () => void, onAction: () => void }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center px-6 bg-brand-blue/60 backdrop-blur-sm"
+    >
+      <motion.div
+        initial={{ scale: 0.9, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.9, y: 20 }}
+        className="bg-white rounded-[40px] p-8 md:p-12 max-w-xl w-full shadow-2xl relative border border-gray-100"
+      >
+        <button 
+          onClick={onClose}
+          className="absolute top-6 right-6 text-gray-400 hover:text-brand-blue transition-colors"
+        >
+          <X size={32} />
+        </button>
+
+        <div className="inline-block bg-brand-orange/10 text-brand-orange px-4 py-1 rounded-full text-sm font-bold mb-6">
+          LIMITED OPPORTUNITY
+        </div>
+        
+        <h2 className="text-3xl md:text-5xl font-black text-brand-blue mb-6 tracking-tighter leading-tight">
+          10 Free Consultation <span className="text-brand-orange">Slots Open.</span>
+        </h2>
+        
+        <p className="text-xl text-gray-600 mb-8 leading-relaxed font-medium">
+          For brands ready to fix their marketing, grow faster, and build smarter systems. Claim your free slot before it’s gone.
+        </p>
+
+        <button
+          onClick={onAction}
+          className="w-full bg-brand-blue text-white py-5 rounded-2xl font-black text-xl hover:bg-brand-orange transition-all shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-3"
+        >
+          Get My Free Consultation <ArrowRight size={24} />
+        </button>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [initialService, setInitialService] = useState('');
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
+  const [showPopup, setShowPopup] = useState(true);
 
   const navigateToContact = (service: string = '') => {
     setInitialService(service);
@@ -1339,6 +1384,17 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <AnimatePresence>
+        {showPopup && (
+          <ConsultationPopup 
+            onClose={() => setShowPopup(false)} 
+            onAction={() => {
+              setShowPopup(false);
+              navigateToContact('Free Consultation');
+            }} 
+          />
+        )}
+      </AnimatePresence>
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <main className="flex-grow">
         <AnimatePresence mode="wait">
