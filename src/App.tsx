@@ -1390,7 +1390,7 @@ export default function App() {
             onClose={() => setShowPopup(false)} 
             onAction={() => {
               setShowPopup(false);
-              navigateToContact('Free Consultation');
+              window.open('https://docs.google.com/forms/d/e/1FAIpQLSf4EVCvyIsw49NbBSw59zI7CujuAJdlWLuwVns1VtxmkbclBA/viewform', '_blank');
             }} 
           />
         )}
