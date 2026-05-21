@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowRight, 
-  CheckCircle2, 
+import { useForm, ValidationError } from '@formspree/react';
+import {
+  ArrowRight,  CheckCircle2, 
   Menu, 
   X, 
   Instagram, 
@@ -716,10 +716,8 @@ const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: 
 );
 
 const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [selectedService, setSelectedService] = useState(initialService || "Social Media Marketing");
-  const form = useRef<HTMLFormElement>(null);
+  const [state, handleSubmit] = useForm('maqkevlb');
 
   // Dynamic Content Mapping
   const getContextualContent = () => {
@@ -755,41 +753,6 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
       setSelectedService(initialService);
     }
   }, [initialService]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.current) return;
-    setLoading(true);
-
-    const formData = new FormData(form.current);
-    const params = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      service_interest: formData.get('service_interest'),
-      budget: formData.get('budget'),
-      message: formData.get('message'),
-      current_date: formData.get('current_date')
-    };
-
-    try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ template_params: params }),
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-      } else {
-        throw new Error('Failed to send');
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Something went wrong. Please try again or email us directly at Brandweaverltd@gmail.com");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="pt-40 md:pt-48 pb-24">
@@ -838,27 +801,10 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
                 </div>
               </div>
             </div>
-
-            <div className="mt-16 p-8 bg-brand-blue rounded-3xl text-white">
-              <h4 className="text-2xl font-black mb-4 tracking-tight">Why Brands Choose Us</h4>
-              <ul className="space-y-4">
-                {[
-                  "We Execute What We Strategize",
-                  "We Mix Creativity with Data",
-                  "We’re Industry Natives",
-                  "We Build Long-Term Growth"
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3">
-                    <CheckCircle2 className="text-brand-orange" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
 
           <div className="bg-white p-6 sm:p-8 md:p-12 rounded-[40px] shadow-3xl border border-gray-100">
-            {submitted ? (
+            {state.succeeded ? (
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -871,7 +817,7 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
                 <p className="text-gray-600 text-lg leading-relaxed">{content.successMsg}</p>
               </motion.div>
             ) : (
-              <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="font-black text-xs uppercase tracking-widest text-gray-400">Full Name</label>
@@ -880,6 +826,7 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
                   <div className="space-y-2">
                     <label className="font-black text-xs uppercase tracking-widest text-gray-400">Email Address</label>
                     <input required name="email" type="email" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all" placeholder="john@company.com" />
+                    <ValidationError prefix="Email" field="email" errors={state.errors} />
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -909,15 +856,15 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
                 <div className="space-y-2">
                   <label className="font-black text-xs uppercase tracking-widest text-gray-400">Tell Us More</label>
                   <textarea required name="message" rows={4} className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-brand-orange transition-all" placeholder="Tell us about your goals..."></textarea>
+                  <ValidationError prefix="Message" field="message" errors={state.errors} />
                 </div>
-                {/* Hidden field for the template's date */}
                 <input type="hidden" name="current_date" value={new Date().toLocaleString()} />
                 <button 
-                    disabled={loading}
+                    disabled={state.submitting}
                     type="submit" 
                     className="w-full bg-brand-blue text-white py-5 rounded-2xl font-black text-xl hover:bg-brand-orange transition-all shadow-2xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:scale-100"
                 >
-                  {loading ? 'Processing...' : content.buttonText}
+                  {state.submitting ? 'Processing...' : content.buttonText}
                 </button>
               </form>
             )}
