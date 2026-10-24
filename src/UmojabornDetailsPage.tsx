@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, CheckCircle2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 type Page = 'home' | 'services' | 'portfolio' | 'pricing' | 'about' | 'blog' | 'contact' | 'luxemaneDetails' | 'umojabornDetails';
 
-const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void }) => {
+const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage?: (p: Page) => void }) => {
   const allImages = [
     '/omo/IMG_1144.PNG',
     '/omo/IMG_1145-1.PNG',
@@ -17,12 +18,13 @@ const UmojabornDetailsPage = ({ setCurrentPage }: { setCurrentPage: (p: Page) =>
   return (
     <div className="pt-40 md:pt-48 pb-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
-        <button
-          onClick={() => setCurrentPage('portfolio')}
-          className="flex items-center gap-2 text-brand-blue font-bold mb-12 hover:gap-4 transition-all"
+        <Link
+          to="/portfolio"
+          onClick={() => setCurrentPage && setCurrentPage('portfolio')}
+          className="inline-flex items-center gap-2 text-brand-blue font-bold mb-12 hover:gap-4 transition-all"
         >
           <ChevronLeft size={20} /> Back to Our Work
-        </button>
+        </Link>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

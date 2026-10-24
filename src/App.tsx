@@ -2,6 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm, ValidationError } from '@formspree/react';
 import {
+  Routes,
+  Route,
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+  Navigate
+} from 'react-router-dom';
+import LuxemaneDetailsPage from './LuxemaneDetailsPage';
+import UmojabornDetailsPage from './UmojabornDetailsPage';
+import {
   ArrowRight,  CheckCircle2, 
   Menu, 
   X, 
@@ -40,12 +51,39 @@ const TikTok = ({ size = 20 }: { size?: number }) => (
   </svg>
 );
 
-// Types
-type Page = 'home' | 'services' | 'portfolio' | 'pricing' | 'about' | 'blog' | 'contact' | 'luxemaneDetails' | 'umojabornDetails';
+// Scroll to top or anchor element on route change
+const ScrollToTop = () => {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      const id = hash.replace('#', '');
+      const timer = setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          const navbarHeight = 100;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [pathname, hash]);
+
+  return null;
+};
+
 // Components
-const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrentPage: (p: Page) => void }) => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -53,49 +91,55 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks: { name: string, id: Page }[] = [
-    { name: 'Home', id: 'home' },
-    { name: 'Services', id: 'services' },
-    { name: 'Our Work', id: 'portfolio' },
-    { name: 'Pricing', id: 'pricing' },
-    { name: 'About', id: 'about' },
-    { name: 'Blog', id: 'blog' },
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services' },
+    { name: 'Our Work', path: '/portfolio' },
+    { name: 'Pricing', path: '/pricing' },
+    { name: 'About', path: '/about' },
+    { name: 'Blog', path: '/blog' },
   ];
+
+  const isLinkActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-brand-blue/90 backdrop-blur-md py-3 shadow-lg' : 'bg-brand-blue py-5'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <div 
+        <Link 
+          to="/"
           className="flex items-center cursor-pointer group"
-          onClick={() => setCurrentPage('home')}
         >
           <img
             src="/logo.png"
             alt="Brandweaver Logo"
             className="h-28 w-auto object-contain transform group-hover:scale-105 transition-all duration-500 filter contrast-[1.1]"
-          />        </div>
+          />
+        </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => setCurrentPage(link.id)}
+            <Link
+              key={link.path}
+              to={link.path}
               className={`font-medium transition-colors hover:text-brand-orange ${
-                currentPage === link.id 
+                isLinkActive(link.path) 
                   ? 'text-brand-orange' 
                   : 'text-white'
               }`}
             >
               {link.name}
-            </button>
+            </Link>
           ))}
-          <button 
-            onClick={() => setCurrentPage('contact')}
+          <Link 
+            to="/contact"
             className="bg-brand-orange text-white px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-transform shadow-lg"
           >
             Start Partnership
-          </button>
+          </Link>
         </div>
 
         {/* Mobile Toggle */}
@@ -115,26 +159,22 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => {
-                    setCurrentPage(link.id);
-                    setIsOpen(false);
-                  }}
-                  className={`text-left text-xl font-bold ${currentPage === link.id ? 'text-brand-orange' : 'text-white'}`}
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`text-left text-xl font-bold ${isLinkActive(link.path) ? 'text-brand-orange' : 'text-white'}`}
                 >
                   {link.name}
-                </button>
+                </Link>
               ))}
-              <button 
-                onClick={() => {
-                  setCurrentPage('contact');
-                  setIsOpen(false);
-                }}
+              <Link 
+                to="/contact"
+                onClick={() => setIsOpen(false)}
                 className="bg-brand-orange text-white px-6 py-4 rounded-xl font-bold text-center mt-4"
               >
                 Start Partnership
-              </button>
+              </Link>
             </div>
           </motion.div>
         )}
@@ -143,16 +183,17 @@ const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrent
   );
 };
 
-const Footer = ({ setCurrentPage, navigateToService }: { setCurrentPage: (p: Page) => void, navigateToService: (id: string) => void }) => (
+const Footer = () => (
   <footer className="bg-brand-black text-white py-12 font-secondary">
     <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
       <div className="col-span-1 md:col-span-2">
-        <div className="flex items-center mb-4 group cursor-pointer" onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+        <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center mb-4 group cursor-pointer">
           <img
             src="/logo.png"
             alt="Brand Weaver Logo"
             className="h-24 w-auto object-contain transform group-hover:scale-105 transition-all duration-500 filter contrast-[1.1]"
-          />        </div>
+          />
+        </Link>
         <p className="text-gray-400 max-w-md mb-2 leading-relaxed font-bold">
           The Engine Behind Modern Business Growth.
         </p>
@@ -181,23 +222,23 @@ const Footer = ({ setCurrentPage, navigateToService }: { setCurrentPage: (p: Pag
       <div>
         <h4 className="font-bold text-base mb-4 text-brand-orange">Growth Solutions</h4>
         <ul className="flex flex-col gap-2 text-gray-400 text-sm">
-          <li><button onClick={() => navigateToService('social-media')} className="hover:text-white transition-colors text-left">Social Media Marketing</button></li>
-          <li><button onClick={() => navigateToService('web-dev')} className="hover:text-white transition-colors text-left">Website & App Dev</button></li>
-          <li><button onClick={() => navigateToService('ai-solutions')} className="hover:text-white transition-colors text-left">AI & Automation</button></li>
-          <li><button onClick={() => navigateToService('branding')} className="hover:text-white transition-colors text-left">Branding & Design</button></li>
-          <li><button onClick={() => navigateToService('ads')} className="hover:text-white transition-colors text-left">PPC & Media Buying</button></li>
+          <li><Link to="/services#social-media" className="hover:text-white transition-colors text-left">Social Media Marketing</Link></li>
+          <li><Link to="/services#web-dev" className="hover:text-white transition-colors text-left">Website & App Dev</Link></li>
+          <li><Link to="/services#ai-solutions" className="hover:text-white transition-colors text-left">AI & Automation</Link></li>
+          <li><Link to="/services#branding" className="hover:text-white transition-colors text-left">Branding & Design</Link></li>
+          <li><Link to="/services#ads" className="hover:text-white transition-colors text-left">PPC & Media Buying</Link></li>
         </ul>
       </div>
 
       <div>
         <h4 className="font-bold text-base mb-4 text-brand-orange">Quick Links</h4>
         <ul className="flex flex-col gap-2 text-gray-400 text-sm">
-          <li><button onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-white transition-colors text-left">Home</button></li>
-          <li><button onClick={() => setCurrentPage('about')} className="hover:text-white transition-colors text-left">About Us</button></li>
-          <li><button onClick={() => setCurrentPage('portfolio')} className="hover:text-white transition-colors text-left">Our Work</button></li>
-          <li><button onClick={() => setCurrentPage('pricing')} className="hover:text-white transition-colors text-left">Pricing</button></li>
-          <li><button onClick={() => setCurrentPage('blog')} className="hover:text-white transition-colors text-left">Blog</button></li>
-          <li><button onClick={() => setCurrentPage('contact')} className="hover:text-white transition-colors text-left font-bold text-brand-orange">Request Custom Package</button></li>
+          <li><Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-white transition-colors text-left">Home</Link></li>
+          <li><Link to="/about" className="hover:text-white transition-colors text-left">About Us</Link></li>
+          <li><Link to="/portfolio" className="hover:text-white transition-colors text-left">Our Work</Link></li>
+          <li><Link to="/pricing" className="hover:text-white transition-colors text-left">Pricing</Link></li>
+          <li><Link to="/blog" className="hover:text-white transition-colors text-left">Blog</Link></li>
+          <li><Link to="/contact" className="hover:text-white transition-colors text-left font-bold text-brand-orange">Request Custom Package</Link></li>
         </ul>
       </div>
     </div>
@@ -208,8 +249,7 @@ const Footer = ({ setCurrentPage, navigateToService }: { setCurrentPage: (p: Pag
 );
 
 // Pages
-// Pages
-const HomePage = ({ setCurrentPage, navigateToContact, navigateToService }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void, navigateToService: (id: string) => void }) => (
+const HomePage = ({ navigateToContact, navigateToService }: { navigateToContact: (s?: string) => void, navigateToService: (id: string) => void }) => (
   <div className="overflow-hidden">
     {/* Hero Section */}
     <section className="relative min-h-screen flex items-center pt-40 md:pt-48 lg:pt-56 pb-20">
@@ -237,12 +277,12 @@ const HomePage = ({ setCurrentPage, navigateToContact, navigateToService }: { se
             >
               👉 Plug In Your Business. <ArrowRight size={20} />
             </button>
-            <button 
-              onClick={() => setCurrentPage('portfolio')}
-              className="px-6 sm:px-8 py-4 rounded-xl font-bold text-base sm:text-lg border-2 border-brand-blue text-brand-blue hover:bg-brand-blue/5 transition-all"
+            <Link 
+              to="/portfolio"
+              className="px-6 sm:px-8 py-4 rounded-xl font-bold text-base sm:text-lg border-2 border-brand-blue text-brand-blue hover:bg-brand-blue/5 transition-all flex items-center justify-center text-center"
             >
               View Our Work
-            </button>
+            </Link>
           </div>
         </motion.div>
         <motion.div
@@ -373,12 +413,12 @@ const HomePage = ({ setCurrentPage, navigateToContact, navigateToService }: { se
             <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter">Our Work</h2>
             <p className="text-blue-100 text-xl font-medium italic italic">Real Results. Real Growth.</p>
           </div>
-          <button 
-            onClick={() => setCurrentPage('portfolio')}
-            className="bg-brand-orange text-white px-8 py-4 rounded-xl font-black text-lg hover:scale-105 transition-all shadow-xl"
+          <Link 
+            to="/portfolio"
+            className="bg-brand-orange text-white px-8 py-4 rounded-xl font-black text-lg hover:scale-105 transition-all shadow-xl text-center inline-block"
           >
             View Our Work
-          </button>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -446,18 +486,18 @@ const HomePage = ({ setCurrentPage, navigateToContact, navigateToService }: { se
         <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-16 leading-relaxed">
           Stay ahead with insights, updates, and the latest trends in digital marketing, AI, and branding. We share actionable strategies that help you build the brand of tomorrow today.
         </p>
-        <button 
-          onClick={() => setCurrentPage('blog')}
-          className="bg-brand-blue text-white px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl"
+        <Link 
+          to="/blog"
+          className="bg-brand-blue text-white px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl inline-block"
         >
           Visit Our Blog
-        </button>
+        </Link>
       </div>
     </section>
   </div>
 );
 
-const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
+const ServicesPage = ({ navigateToContact }: { navigateToContact: (s?: string) => void }) => (
   <div className="pt-40 md:pt-48 pb-24">
     <div className="max-w-7xl mx-auto px-6">
       <div className="text-center mb-20">
@@ -582,7 +622,7 @@ const ServicesPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (
   </div>
 );
 
-const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
+const AboutPage = ({ navigateToContact }: { navigateToContact: (s?: string) => void }) => (
   <div className="pt-40 md:pt-48 pb-24">
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-32">
@@ -716,7 +756,9 @@ const AboutPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: 
 );
 
 const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
-  const [selectedService, setSelectedService] = useState(initialService || "Social Media Marketing");
+  const [searchParams] = useSearchParams();
+  const serviceFromQuery = searchParams.get('service');
+  const [selectedService, setSelectedService] = useState(serviceFromQuery || initialService || "Social Media Marketing");
   const [state, handleSubmit] = useForm('mzdwgkgq');
 
   // Dynamic Content Mapping
@@ -747,12 +789,14 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
 
   const content = getContextualContent();
 
-  // Update selection if prop changes
+  // Update selection if prop or query changes
   useEffect(() => {
-    if (initialService) {
+    if (serviceFromQuery) {
+      setSelectedService(serviceFromQuery);
+    } else if (initialService) {
       setSelectedService(initialService);
     }
-  }, [initialService]);
+  }, [serviceFromQuery, initialService]);
 
   return (
     <div className="pt-40 md:pt-48 pb-24">
@@ -875,7 +919,7 @@ const ContactPage = ({ initialService = '' }: { initialService?: string }) => {
   );
 };
 
-const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void, navigateToService: (id: string) => void }) => (
+const PortfolioPage = ({ navigateToContact }: { navigateToContact: (s?: string) => void }) => (
   <div className="pt-40 md:pt-48 pb-24">
     <div className="max-w-7xl mx-auto px-6 text-center mb-20">
       <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter">Featured Projects</h1>
@@ -940,12 +984,12 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
               </ul>
             </div>
           </div>
-          <button 
-            onClick={() => setCurrentPage('luxemaneDetails')}
-            className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
+          <Link 
+            to="/portfolio/luxemane"
+            className="inline-block bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg text-center"
           >
             View More
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -977,12 +1021,12 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
               </ul>
             </div>
           </div>
-          <button 
-            onClick={() => setCurrentPage('umojabornDetails')}
-            className="bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg"
+          <Link 
+            to="/portfolio/umojaborn"
+            className="inline-block bg-brand-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-orange transition-all shadow-lg text-center"
           >
             View More
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -1016,7 +1060,7 @@ const PortfolioPage = ({ setCurrentPage, navigateToContact, navigateToService }:
   </div>
 );
 
-const PricingPage = ({ setCurrentPage, navigateToContact }: { setCurrentPage: (p: Page) => void, navigateToContact: (s?: string) => void }) => (
+const PricingPage = ({ navigateToContact }: { navigateToContact: (s?: string) => void }) => (
   <div className="pt-40 md:pt-48 pb-24">
     <div className="max-w-7xl mx-auto px-6 text-center mb-20">
       <h1 className="text-5xl md:text-7xl text-brand-blue mb-6 font-black tracking-tighter text-balance">Invest in the Systems That Actually Grow Your Business</h1>
@@ -1227,9 +1271,6 @@ const BlogPage = ({ navigateToContact }: { navigateToContact: (s?: string) => vo
   );
 };
 
-import LuxemaneDetailsPage from './LuxemaneDetailsPage';
-import UmojabornDetailsPage from './UmojabornDetailsPage';
-
 const ConsultationPopup = ({ onClose, onAction }: { onClose: () => void, onAction: () => void }) => {
   return (
     <motion.div
@@ -1275,62 +1316,25 @@ const ConsultationPopup = ({ onClose, onAction }: { onClose: () => void, onActio
 };
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('home');
-  const [initialService, setInitialService] = useState('');
-  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(true);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const navigateToContact = (service: string = '') => {
-    setInitialService(service);
-    setCurrentPage('contact');
+    if (service) {
+      navigate(`/contact?service=${encodeURIComponent(service)}`);
+    } else {
+      navigate('/contact');
+    }
   };
 
   const navigateToService = (id: string) => {
-    setSelectedServiceId(id);
-    setCurrentPage('services');
-  };
-
-  useEffect(() => {
-    if (currentPage === 'services' && selectedServiceId) {
-      // Increase delay to ensure exit animation finishes (300ms) + mount
-      const timer = setTimeout(() => {
-        const element = document.getElementById(selectedServiceId);
-        if (element) {
-          const navbarHeight = 100; // Approximate height of fixed navbar
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
-          });
-          // Clear it so it doesn't scroll again on unrelated re-renders
-          setSelectedServiceId(null);
-        }
-      }, 400);
-      return () => clearTimeout(timer);
-    } else if (!selectedServiceId) {
-      window.scrollTo(0, 0);
-    }
-  }, [currentPage, selectedServiceId]);
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home': return <HomePage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} navigateToService={navigateToService} />;
-      case 'services': return <ServicesPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
-      case 'portfolio': return <PortfolioPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} navigateToService={navigateToService} />;
-      case 'pricing': return <PricingPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
-      case 'about': return <AboutPage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} />;
-      case 'blog': return <BlogPage navigateToContact={navigateToContact} />;
-      case 'contact': return <ContactPage initialService={initialService} />;
-      case 'luxemaneDetails': return <LuxemaneDetailsPage setCurrentPage={setCurrentPage} />;
-      case 'umojabornDetails': return <UmojabornDetailsPage setCurrentPage={setCurrentPage} />;
-      default: return <HomePage setCurrentPage={setCurrentPage} navigateToContact={navigateToContact} navigateToService={navigateToService} />;
-    }
+    navigate(`/services#${id}`);
   };
 
   return (
     <div className="min-h-screen flex flex-col">
+      <ScrollToTop />
       <AnimatePresence>
         {showPopup && (
           <ConsultationPopup 
@@ -1342,21 +1346,32 @@ export default function App() {
           />
         )}
       </AnimatePresence>
-      <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Navbar />
       <main className="flex-grow">
         <AnimatePresence mode="wait">
           <motion.div
-            key={currentPage}
+            key={location.pathname}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            {renderPage()}
+            <Routes location={location}>
+              <Route path="/" element={<HomePage navigateToContact={navigateToContact} navigateToService={navigateToService} />} />
+              <Route path="/services" element={<ServicesPage navigateToContact={navigateToContact} />} />
+              <Route path="/portfolio" element={<PortfolioPage navigateToContact={navigateToContact} />} />
+              <Route path="/portfolio/luxemane" element={<LuxemaneDetailsPage />} />
+              <Route path="/portfolio/umojaborn" element={<UmojabornDetailsPage />} />
+              <Route path="/pricing" element={<PricingPage navigateToContact={navigateToContact} />} />
+              <Route path="/about" element={<AboutPage navigateToContact={navigateToContact} />} />
+              <Route path="/blog" element={<BlogPage navigateToContact={navigateToContact} />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
           </motion.div>
         </AnimatePresence>
       </main>
-      <Footer setCurrentPage={setCurrentPage} navigateToService={navigateToService} />
+      <Footer />
     </div>
   );
 }
